@@ -1,14 +1,22 @@
 
 #include <dapp.system/dapp.system.hpp>
+#include "claimpledges.cpp"
+#include "deldraft.cpp"
+#include "delprofile.cpp"
+#include "delreward.cpp"
+#include "editprofile.cpp"
+#include "killproject.cpp"
+#include "newproject.cpp"
+#include "pubproject.cpp"
+#include "savebasics.cpp"
+#include "savecontent.cpp"
+#include "savereward.cpp"
 
 namespace dapp
 {
 
-void system::create(eosio::name slug)
-{
-    require_auth(_self);
-}
-
 } // namespace dapp
 
-EOSIO_DISPATCH(dapp::system, (create))
+EOSIO_DISPATCH(
+    dapp::system,
+    (claimpledges)(deldraft)(delprofile)(delreward)(killproject)(newproject)(pubproject)(savebasics)(savecontent)(savereward))

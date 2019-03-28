@@ -1,28 +1,25 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import React from 'react';
+import Helmet from 'react-helmet';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import AboutPage from './pages/AboutPage';
+import ExplorePage from './pages/ExplorePage';
+import HomePage from './pages/HomePage';
+import LoginPage from './pages/LoginPage';
+import StartPage from './pages/StartPage';
 
-class App extends Component {
-  render() {
+function App() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.tsx</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+        <Router>
+            <Helmet titleTemplate='%s — DStarter' />
+            <CssBaseline />
+            <Route exact path='/' component={HomePage} />
+            <Route path='/about' component={AboutPage} />
+            <Route path='/explore' component={ExplorePage} />
+            <Route path='/start' component={StartPage} />
+            <Route path='/login' component={LoginPage} />
+        </Router>
     );
-  }
 }
 
 export default App;

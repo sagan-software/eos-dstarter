@@ -6,7 +6,6 @@ set(EOSIO_WASM_OLD_BEHAVIOR "Off")
 find_package(eosio.cdt)
 
 add_subdirectory(dapp.system)
-add_subdirectory(dapp.token)
 add_subdirectory(../../../eosio.contracts/contracts/eosio.bios eosio.bios)
 add_subdirectory(../../../eosio.contracts/contracts/eosio.msig eosio.msig)
 add_subdirectory(../../../eosio.contracts/contracts/eosio.system eosio.system)

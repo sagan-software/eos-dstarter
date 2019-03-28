@@ -42,9 +42,9 @@ using eosio::testing::read_wast;
 
 struct contracts
 {
-   static std::vector<uint8_t> token_wasm() { return read_wasm("${CMAKE_BINARY_DIR}/../contracts/dapp.token/dapp.token.wasm"); }
-   static std::string token_wast() { return read_wast("${CMAKE_BINARY_DIR}/../contracts/dapp.token/dapp.token.wast"); }
-   static std::vector<char> token_abi() { return read_abi("${CMAKE_BINARY_DIR}/../contracts/dapp.token/dapp.token.abi"); }
+   static std::vector<uint8_t> system_wasm() { return read_wasm("${CMAKE_BINARY_DIR}/../contracts/dapp.system/dapp.system.wasm"); }
+   static std::string system_wast() { return read_wast("${CMAKE_BINARY_DIR}/../contracts/dapp.system/dapp.system.wast"); }
+   static std::vector<char> system_abi() { return read_abi("${CMAKE_BINARY_DIR}/../contracts/dapp.system/dapp.system.abi"); }
 };
 
 } // namespace testing
