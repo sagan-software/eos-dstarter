@@ -1,8 +1,6 @@
 {
     "defaultSeverity": "error",
     "extends": [
-        "tslint:recommended",
-        "tslint-eslint-rules",
         "tslint-react-hooks",
         "@blockone/tslint-config-blockone/tslint-config"
     ],

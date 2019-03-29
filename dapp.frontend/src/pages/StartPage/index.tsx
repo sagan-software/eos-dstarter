@@ -1,13 +1,21 @@
+import Button from '@material-ui/core/Button';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import Stepper from '@material-ui/core/Stepper';
 import { Theme, withStyles, WithStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import React, { useReducer } from 'react';
+import React, { useMemo, useReducer } from 'react';
 import { Helmet } from 'react-helmet';
 import SiteSkeleton from '../../components/SiteSkeleton';
+import { useScatter } from '../../context/scatter';
 import ActiveStep from './ActiveStep';
-import { formStepTypes, getStepLabel, initialState, reducer } from './state';
+import {
+    formStepTypes,
+    getStepLabel,
+    initialState,
+    newProject,
+    reducer,
+} from './state';
 
 const styles = (theme: Theme) => ({
     container: {
@@ -26,9 +34,29 @@ const styles = (theme: Theme) => ({
 
 export interface Props extends WithStyles<typeof styles> {}
 
-function StartPage({ classes }: Props) {
-    const [state, dispatch] = useReducer(reducer, initialState);
+function StartPage(props: Props) {
+    const scatter = useScatter();
 
+    console.warn('!!!!!!!', scatter);
+
+    switch (scatter.type) {
+    case 'idle':
+        scatter.connect('DStarter');
+    case 'connecting':
+        return <>Loading...</>;
+    case 'connected':
+        return <ScatterAvailable {...props} />;
+    case 'unavailable':
+        return <ScatterRequired />;
+    }
+}
+
+function ScatterRequired() {
+    return <div>Scatter is required</div>;
+}
+
+function ScatterAvailable({ classes }: Props) {
+    const [state, dispatch] = useReducer(reducer, initialState);
     return (
         <SiteSkeleton hideFooter hideSiteNav hideUserNav>
             <Helmet>
@@ -46,6 +74,7 @@ function StartPage({ classes }: Props) {
                     ))}
                 </Stepper>
                 <ActiveStep state={state} dispatch={dispatch} />
+                <Button onClick={() => newProject(state)}>Temp</Button>
                 <Typography
                     variant='body1'
                     align='center'

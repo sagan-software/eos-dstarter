@@ -1,10 +1,20 @@
 declare namespace ScatterJS {
     export class Network {
         constructor(...args: any[]);
-        fullhost(): string;
-        unique(): string;
-        static fromJson(b: any): Network;
-        static placeholder(): Network;
+        public fullhost(): string;
+        public unique(): string;
+        public static fromJson(b: NetworkJson): Network;
+        public static placeholder(): Network;
+    }
+
+    export interface NetworkJson {
+        name: string;
+        protocol: string;
+        host: string;
+        port: number;
+        blockchain: string;
+        chainId: string;
+        token?: string;
     }
 
     export interface Network {
@@ -45,6 +55,6 @@ declare namespace ScatterJS {
     export function account(blockchain: string): any;
 }
 
-declare module "scatterjs-core" {
+declare module 'scatterjs-core' {
     export = ScatterJS;
 }

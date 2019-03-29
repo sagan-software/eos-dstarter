@@ -6,15 +6,15 @@ namespace dapp
 void system::savereward(
     const name account,
     const name draft_name,
-    const optional<uint8_t> reward_index,
+    const uint8_t reward_index,
     const string &title,
     const string &description,
     const asset &pledge_amount,
     const vector<project_reward_item> &items,
     const time_point_sec estimated_delivery,
     const uint32_t initial_quantity,
-    const optional<time_point_sec> start_time,
-    const optional<time_point_sec> end_time)
+    const time_point_sec start_time,
+    const time_point_sec end_time)
 {
     // Make sure a project exists with that slug
 

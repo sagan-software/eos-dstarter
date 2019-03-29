@@ -36,9 +36,11 @@ function SiteHeader(props: Props) {
                 <Link to='/start'>Start a project</Link>
             </Grid>
             <Grid item xs>
-                <Typography variant='h6' color='inherit' align='center'>
-                    EOSFUNDER
-                </Typography>
+                <Link to='/'>
+                    <Typography variant='h6' color='inherit' align='center'>
+                        EOSFUNDER
+                    </Typography>
+                </Link>
             </Grid>
             <Grid item xs={4} hidden={props.hideSiteNav}>
                 <Link to='/start'>Search</Link>

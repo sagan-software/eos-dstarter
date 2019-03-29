@@ -50,6 +50,7 @@ services:
             - "8900"
         volumes:
             - keosd-data-volume:/eos/build/data-dir
+            - ./dapp.contracts/build/contracts:/contracts:ro
         links:
             - nodeosd
         stop_grace_period: 10m

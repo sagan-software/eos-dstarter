@@ -24,6 +24,7 @@ class[[eosio::contract("dapp.system")]] system : public eosio::contract
     system(name receiver, name code, datastream<const char *> ds) : contract(receiver, code, ds),
                                                                     _profiles(receiver, receiver.value),
                                                                     _projects(receiver, receiver.value){}
+
                                                                         [[eosio::action]] void
                                                                         claimpledges(
                                                                             const name project_name);
@@ -43,7 +44,7 @@ class[[eosio::contract("dapp.system")]] system : public eosio::contract
     [[eosio::action]] void editprofile(
         const name account,
         const string display_name,
-        const optional<string> avatar_hash,
+        const string avatar_hash,
         const string biography,
         const vector<string> &websites);
 
@@ -52,7 +53,9 @@ class[[eosio::contract("dapp.system")]] system : public eosio::contract
 
     [[eosio::action]] void newproject(
         const name account,
-        const name draft_name);
+        const name draft_name,
+        const uint16_t category,
+        const string &description);
 
     [[eosio::action]] void pubproject(
         const name account,
@@ -70,28 +73,28 @@ class[[eosio::contract("dapp.system")]] system : public eosio::contract
         const uint16_t category,
         const time_point_sec start_time,
         const time_point_sec end_time,
-        const optional<uint8_t> duration_days,
+        const uint8_t duration_days,
         const vector<string> &tags);
 
     [[eosio::action]] void savecontent(
         const name account,
         const name draft_name,
-        const optional<string> image_hash,
-        const optional<string> video_hash,
-        const optional<string> story_hash);
+        const string image_hash,
+        const string video_hash,
+        const string story_hash);
 
     [[eosio::action]] void savereward(
         const name account,
         const name draft_name,
-        const optional<uint8_t> reward_index,
+        const uint8_t reward_index,
         const string &title,
         const string &description,
         const asset &pledge_amount,
         const vector<project_reward_item> &items,
         const time_point_sec estimated_delivery,
         const uint32_t initial_quantity,
-        const optional<time_point_sec> start_time,
-        const optional<time_point_sec> end_time);
+        const time_point_sec start_time,
+        const time_point_sec end_time);
 };
 
 } // namespace dapp

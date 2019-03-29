@@ -21,10 +21,10 @@ function ChainStep({ dispatch }: ChainStepProps) {
     return (
         <FormStep
             activeStep={FormStepType.Chain}
-            headline='Finally, select an EOSIO blockchain to use.'
+            headline='Finally, select a blockchain to use.'
             subheading='Tell us what EOSIO blockchain you’re using before we proceed.'
             dispatch={dispatch}
-            nextDisabled
+            nextDisabled={false}
         >
             <Paper>
                 <List>
@@ -32,30 +32,27 @@ function ChainStep({ dispatch }: ChainStepProps) {
                         <ListItemIcon>
                             <RadioButtonChecked />
                         </ListItemIcon>
-                        <ListItemText
-                            primary='EOS Mainnet'
-                            secondary={'api.eosnewyork.io'}
-                        />
+                        <ListItemText primary='EOS Devnet' />
+                    </ListItem>
+                    <ListItem button>
+                        <ListItemIcon>
+                            <RadioButtonChecked />
+                        </ListItemIcon>
+                        <ListItemText primary='EOS Mainnet' />
                     </ListItem>
                     <Divider />
                     <ListItem button>
                         <ListItemIcon>
                             <RadioButtonUnchecked />
                         </ListItemIcon>
-                        <ListItemText
-                            primary='Telos Mainnet'
-                            secondary={'api.telosfoundation.io'}
-                        />
+                        <ListItemText primary='Telos Mainnet' />
                     </ListItem>
                     <Divider />
                     <ListItem button>
                         <ListItemIcon>
                             <RadioButtonUnchecked />
                         </ListItemIcon>
-                        <ListItemText
-                            primary='Worbli Mainnet'
-                            secondary={'api.worbli.io'}
-                        />
+                        <ListItemText primary='Worbli Mainnet' />
                     </ListItem>
                 </List>
             </Paper>

@@ -29,3 +29,15 @@ Reward
 -   Has a title
 -   Has a description
 -
+
+Start page states
+
+-   Waiting for Scatter
+-   Scatter not connected
+-   Scatter connected - New Project Form
+    -   Category
+    -   Description
+    -   Network
+    -   Is submitting?
+    -   Login error
+    -   Submit error

@@ -1,9 +1,13 @@
+import { Api, JsonRpc } from 'eosjs';
+import { NetworkJson } from 'scatterjs-core';
+import ScatterJS from 'scatterjs-core';
 import { Category } from '../../categories';
 
 export interface State {
     readonly activeStep: FormStepType;
     readonly category: Category;
     readonly description: string;
+    readonly network: NetworkJson;
 }
 
 export enum FormStepType {
@@ -16,6 +20,15 @@ export const initialState: State = {
     activeStep: FormStepType.Category,
     category: 0,
     description: '',
+    network: {
+        name: 'EOS Localhost',
+        protocol: 'https',
+        host: '127.0.0.1',
+        port: 8889,
+        blockchain: 'eos',
+        chainId:
+            'cf057bbfb72640471fd910bcb67639c22df9f92470936cddc1ade0e2f2e7dc4f',
+    },
 };
 
 export type Action =
@@ -92,4 +105,50 @@ export function getStepLabel(step: FormStepType): string {
     case FormStepType.Chain:
         return 'Chain';
     }
+}
+
+export async function newProject(state: State) {
+    const network = ScatterJS.Network.fromJson(state.network);
+    const rpc = new JsonRpc(network.fullhost());
+
+    await (ScatterJS as any).suggestNetwork(network);
+    (ScatterJS as any).login({ accounts: [network] }).then((id: any) => {
+        const eos: Api = ScatterJS.eos(network, Api, { rpc, beta3: true });
+        const account = ScatterJS.account('eos');
+        eos.transact(
+            {
+                actions: [
+                    {
+                        account: 'dappcontract',
+                        name: 'newproject',
+                        authorization: [
+                            {
+                                actor: account.name,
+                                permission: account.authority,
+                            },
+                        ],
+                        data: {
+                            account: account.name,
+                            draft_name: 'abc123',
+                            category: 100,
+                            description: 'Cool new project',
+                        },
+                    },
+                ],
+            },
+            {
+                blocksBehind: 3,
+                expireSeconds: 30,
+            },
+        )
+            .then((res) => {
+                // tslint:disable-next-line
+                console.log("sent: ", res);
+            })
+            .catch((err) => {
+                // tslint:disable-next-line
+                console.error("error: ", err);
+            });
+        console.warn('BALLS', id);
+    });
 }

@@ -14,7 +14,7 @@ void system::savebasics(
     const uint16_t category,
     const time_point_sec start_time,
     const time_point_sec end_time,
-    const optional<uint8_t> duration_days,
+    const uint8_t duration_days,
     const vector<string> &tags)
 {
     // Make sure a project exists with that slug
