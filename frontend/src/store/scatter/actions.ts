@@ -1,7 +1,12 @@
 import { Action } from 'redux';
 import { ThunkAction } from 'redux-thunk';
-import ScatterJS from 'scatterjs-core';
+import Scatter from 'scatterjs-core';
+import ScatterEOS from 'scatterjs-plugin-eosjs2';
 import { ScatterAction, ScatterActionType, ScatterState } from './types';
+
+Scatter.plugins(new ScatterEOS());
+
+(window as any).ScatterJS = Scatter;
 
 export type ThunkResult<R> = ThunkAction<R, ScatterState, null, ScatterAction>;
 
@@ -11,17 +16,57 @@ export function connect(appName: string): ThunkResult<Promise<Action>> {
             type: ScatterActionType.Connect,
             appName,
         });
-        const connected = await ScatterJS.connect(appName);
+        const connected = await Scatter.connect(appName);
         if (connected) {
             return dispatch({
-                type: ScatterActionType.SetConnected,
+                type: ScatterActionType.ConnectOk,
                 appName,
+                identity: Scatter.identity,
             });
         } else {
             return dispatch({
-                type: ScatterActionType.SetUnavailable,
+                type: ScatterActionType.ConnectErr,
                 appName,
             });
         }
+    };
+}
+
+export function login(
+    options: Scatter.LoginOptions,
+): ThunkResult<Promise<Action>> {
+    return async (dispatch) => {
+        dispatch({
+            type: ScatterActionType.Login,
+            options,
+        });
+        try {
+            const identity = await Scatter.login(options);
+            return dispatch({
+                type: ScatterActionType.LoginOk,
+                identity,
+            });
+        } catch (error) {
+            return dispatch({
+                type: ScatterActionType.LoginErr,
+                error,
+            });
+        }
+    };
+}
+
+export function logout(
+    identity: Scatter.Identity,
+): ThunkResult<Promise<Action>> {
+    return async (dispatch) => {
+        dispatch({
+            type: ScatterActionType.Logout,
+            identity,
+        });
+        // TODO can this error?
+        await Scatter.logout();
+        return dispatch({
+            type: ScatterActionType.LogoutOk,
+        });
     };
 }

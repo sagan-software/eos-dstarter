@@ -1,11 +1,10 @@
-declare class ScatterEOS implements ScatterJS.Plugin {}
-
-declare module "scatterjs-plugin-eosjs2" {
+declare module 'scatterjs-plugin-eosjs2' {
+    declare class ScatterEOS implements ScatterJS.Plugin {}
     export = ScatterEOS;
 }
 
-declare namespace ScatterJS {
-    import eosjs from "../../node_modules/eosjs/dist";
+declare module 'scatterjs-core' {
+    import eosjs from '../../node_modules/eosjs/dist';
 
     export function eos(network: any, api: any, options: any): eosjs.Api;
 }

@@ -1,4 +1,3 @@
-import Button from '@material-ui/core/Button';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import Stepper from '@material-ui/core/Stepper';
@@ -9,6 +8,7 @@ import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import SiteSkeleton from '../../components/SiteSkeleton';
 import { AppState } from '../../store';
+import * as chains from '../../store/chains';
 import * as scatter from '../../store/scatter';
 import * as startPage from '../../store/startPage';
 import CategoryStep from './CategoryStep';
@@ -19,12 +19,15 @@ import styles from './styles';
 export interface Props extends WithStyles<typeof styles> {
     readonly scatter: scatter.ScatterState;
     readonly scatterConnect: any;
+    readonly scatterLogin: any;
     readonly state: startPage.StartPageState;
     readonly nextStep: typeof startPage.nextStep;
     readonly prevStep: typeof startPage.prevStep;
     readonly setCategory: typeof startPage.setCategory;
     readonly setDescription: typeof startPage.setDescription;
-    readonly setNetworkUrl: typeof startPage.setNetworkUrl;
+    readonly setChainId: typeof startPage.setChainId;
+    readonly chains: chains.ChainsState;
+    readonly checkRpcServer: any;
 }
 
 function StartPage(props: Props) {
@@ -45,6 +48,7 @@ function ScatterRequired() {
 }
 
 function ScatterAvailable({ classes, state, ...props }: Props) {
+    console.log(props.scatter);
     return (
         <SiteSkeleton hideFooter hideSiteNav hideUserNav>
             <Helmet>
@@ -64,6 +68,20 @@ function ScatterAvailable({ classes, state, ...props }: Props) {
                     ))}
                 </Stepper>
                 <ActiveStep state={state} classes={classes} {...props} />
+                <div
+                    onClick={() => {
+                        // props.checkRpcServer(
+                        //     chains.RpcServerProtocol.Https,
+                        //     'api.eosnewyork.io',
+                        //     443,
+                        // );
+                        props.scatterLogin({
+                            accounts: [{ chainId: state.chainId }],
+                        });
+                    }}
+                >
+                    Click this
+                </div>
                 <Typography
                     variant='body1'
                     align='center'
@@ -103,9 +121,10 @@ function ActiveStep(props: Props) {
         return (
                 <ChainStep
                     classes={props.classes}
-                    value={props.state.networkUrl}
-                    setNetworkUrl={props.setNetworkUrl}
+                    value={props.state.chainId}
+                    setChainId={props.setChainId}
                     prevStep={props.prevStep}
+                    chains={props.chains}
                 />
         );
     }
@@ -114,6 +133,7 @@ function ActiveStep(props: Props) {
 const mapStateToProps = (state: AppState) => ({
     scatter: state.scatter,
     state: state.startPage,
+    chains: state.chains,
 });
 
 export default withStyles(styles, { withTheme: true })(
@@ -121,11 +141,13 @@ export default withStyles(styles, { withTheme: true })(
         mapStateToProps,
         {
             scatterConnect: scatter.connect,
+            scatterLogin: scatter.login,
             nextStep: startPage.nextStep,
             prevStep: startPage.prevStep,
             setCategory: startPage.setCategory,
             setDescription: startPage.setDescription,
-            setNetworkUrl: startPage.setNetworkUrl,
+            setChainId: startPage.setChainId,
+            checkRpcServer: chains.checkRpcServer,
         },
     )(StartPage),
 );

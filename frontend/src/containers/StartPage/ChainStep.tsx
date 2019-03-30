@@ -11,6 +11,7 @@ import { WithStyles } from '@material-ui/core/styles';
 import RadioButtonChecked from '@material-ui/icons/RadioButtonChecked';
 import RadioButtonUnchecked from '@material-ui/icons/RadioButtonUnchecked';
 import React from 'react';
+import * as chainsStore from '../../store/chains';
 import * as startPage from '../../store/startPage';
 import {
     Buttons,
@@ -25,15 +26,17 @@ import styles from './styles';
 
 export interface ChainStepProps extends WithStyles<typeof styles> {
     readonly value: string;
-    readonly setNetworkUrl: typeof startPage.setNetworkUrl;
+    readonly setChainId: typeof startPage.setChainId;
     readonly prevStep: typeof startPage.prevStep;
+    readonly chains: chainsStore.ChainsState;
 }
 
 function ChainStep({
     classes,
     value,
-    setNetworkUrl,
+    setChainId,
     prevStep,
+    chains,
 }: ChainStepProps) {
     return (
         <Container classes={classes}>
@@ -46,32 +49,23 @@ function ChainStep({
             <Inner classes={classes}>
                 <Paper>
                     <List>
-                        <ListItem button>
-                            <ListItemIcon>
-                                <RadioButtonChecked />
-                            </ListItemIcon>
-                            <ListItemText primary='EOS Devnet' />
-                        </ListItem>
-                        <ListItem button>
-                            <ListItemIcon>
-                                <RadioButtonChecked />
-                            </ListItemIcon>
-                            <ListItemText primary='EOS Mainnet' />
-                        </ListItem>
-                        <Divider />
-                        <ListItem button>
-                            <ListItemIcon>
-                                <RadioButtonUnchecked />
-                            </ListItemIcon>
-                            <ListItemText primary='Telos Mainnet' />
-                        </ListItem>
-                        <Divider />
-                        <ListItem button>
-                            <ListItemIcon>
-                                <RadioButtonUnchecked />
-                            </ListItemIcon>
-                            <ListItemText primary='Worbli Mainnet' />
-                        </ListItem>
+                        {/* TODO: No chains */}
+                        {Object.values(chains.chains).map((chain) => (
+                            <ListItem
+                                button
+                                key={chain.chainId}
+                                onClick={() => setChainId(chain.chainId)}
+                            >
+                                <ListItemIcon>
+                                    {value === chain.chainId ? (
+                                        <RadioButtonChecked />
+                                    ) : (
+                                        <RadioButtonUnchecked />
+                                    )}
+                                </ListItemIcon>
+                                <ListItemText primary={chain.displayName} />
+                            </ListItem>
+                        ))}
                     </List>
                 </Paper>
             </Inner>

@@ -5,8 +5,8 @@ import {
     NextStepAction,
     PrevStepAction,
     SetCategoryAction,
+    SetChainIdAction,
     SetDescriptionAction,
-    SetNetworkUrlAction,
     StartPageAction,
     StartPageActionType,
     StartPageState,
@@ -45,9 +45,9 @@ export function setDescription(value: string): SetDescriptionAction {
     };
 }
 
-export function setNetworkUrl(value: string): SetNetworkUrlAction {
+export function setChainId(value: string): SetChainIdAction {
     return {
-        type: StartPageActionType.SetNetworkUrl,
+        type: StartPageActionType.SetChainId,
         value,
     };
 }

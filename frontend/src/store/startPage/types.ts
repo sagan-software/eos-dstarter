@@ -4,7 +4,7 @@ export interface StartPageState {
     readonly activeStep: FormStepType;
     readonly category: Category;
     readonly description: string;
-    readonly networkUrl: string;
+    readonly chainId: string;
 }
 
 export enum FormStepType {
@@ -18,7 +18,7 @@ export enum StartPageActionType {
     PrevStep = 'startPagePrevStep',
     SetCategory = 'startPageSetCategory',
     SetDescription = 'startPageSetDescription',
-    SetNetworkUrl = 'startPageSetNetworkUrl',
+    SetChainId = 'startPageSetChainId',
     Submit = 'startPageSubmit',
 }
 
@@ -27,7 +27,7 @@ export type StartPageAction =
     | PrevStepAction
     | SetCategoryAction
     | SetDescriptionAction
-    | SetNetworkUrlAction
+    | SetChainIdAction
     | SubmitAction;
 
 export interface NextStepAction {
@@ -48,8 +48,8 @@ export interface SetDescriptionAction {
     readonly value: string;
 }
 
-export interface SetNetworkUrlAction {
-    readonly type: StartPageActionType.SetNetworkUrl;
+export interface SetChainIdAction {
+    readonly type: StartPageActionType.SetChainId;
     readonly value: string;
 }
 

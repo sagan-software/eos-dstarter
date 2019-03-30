@@ -1,3 +1,4 @@
+import * as chains from '../chains';
 import {
     FormStepType,
     getNextStep,
@@ -11,7 +12,11 @@ export const initialState: StartPageState = {
     activeStep: FormStepType.Category,
     category: 0,
     description: '',
-    networkUrl: 'https://127.0.0.1:8889',
+    chainId:
+        Object.values(chains.initialState.chains)
+            .sort((a, b) => a.priority - b.priority)
+            .map((chain) => chain.chainId)[0] ||
+        'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906',
 };
 
 export function startPageReducer(
@@ -39,10 +44,10 @@ export function startPageReducer(
             ...state,
             description: action.value,
         };
-    case StartPageActionType.SetNetworkUrl:
+    case StartPageActionType.SetChainId:
         return {
             ...state,
-            networkUrl: action.value,
+            chainId: action.value,
         };
     case StartPageActionType.Submit:
         return {
