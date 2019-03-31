@@ -52,7 +52,7 @@ struct project_reward
     time_point_sec end_time;
 };
 
-struct [[ eosio::table, eosio::contract("dapp.system") ]] project
+struct [[ eosio::table, eosio::contract("contract") ]] project
 {
     name project_name;
     name creator;
@@ -85,7 +85,7 @@ typedef eosio::multi_index<
         const_mem_fun<project, uint64_t, &project::by_category>>>
     projects_table;
 
-struct [[ eosio::table, eosio::contract("dapp.system") ]] backer
+struct [[ eosio::table, eosio::contract("contract") ]] backer
 {
     uint64_t id;
     name project_slug;

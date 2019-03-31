@@ -6,7 +6,7 @@ import {
     Category,
     getPrimaryCategoryName,
     primaryCategories,
-} from '../../categories';
+} from '../../store/projects';
 import * as startPage from '../../store/startPage';
 import {
     Buttons,

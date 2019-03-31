@@ -1,5 +1,5 @@
 import { Action } from 'redux';
-import { ThunkAction } from 'redux-thunk';
+import { AppThunkResult } from '../';
 import {
     AddRpcServerAction,
     ChainsAction,
@@ -11,14 +11,13 @@ import {
 } from './actionTypes';
 import {
     ChainPriority,
-    ChainsState,
     getRpcServerUrl,
     RpcServerProtocol,
     RpcServerStatus,
     RpcServerStatusType,
 } from './stateTypes';
 
-export type ThunkResult<R> = ThunkAction<R, ChainsState, null, ChainsAction>;
+export type ThunkResult<R> = AppThunkResult<R, ChainsAction>;
 
 export function setChain(
     chainId: string,
@@ -97,6 +96,7 @@ export function checkRpcServer(
             }),
         );
         const rpcServerUrl = getRpcServerUrl(protocol, host, port);
+        // TODO: timeout
         const response = await fetch(`${rpcServerUrl}/v1/chain/get_info`);
         if (response.status < 400) {
             const requestEnd = new Date();
@@ -119,5 +119,23 @@ export function checkRpcServer(
                 }),
             );
         }
+    };
+}
+
+export function checkAllRpcServers(): ThunkResult<
+    Promise<ReadonlyArray<Action>>
+> {
+    return (dispatch, getState) => {
+        const { chains } = getState();
+        const promises = Object.values(chains.rpcServers).map((rpcServer) =>
+            dispatch(
+                checkRpcServer(
+                    rpcServer.protocol,
+                    rpcServer.host,
+                    rpcServer.port,
+                ),
+            ),
+        );
+        return Promise.all(promises);
     };
 }

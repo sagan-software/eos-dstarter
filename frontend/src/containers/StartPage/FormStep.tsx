@@ -72,11 +72,17 @@ export function NextButton(props: NextButtonProps) {
 export interface SubmitButtonProps extends WithStyles<typeof styles> {
     readonly children?: any;
     readonly disabled?: boolean;
+    readonly submit?: any;
 }
 
 export function SubmitButton(props: SubmitButtonProps) {
     return (
-        <Button variant='contained' color='primary' disabled={props.disabled}>
+        <Button
+            variant='contained'
+            color='primary'
+            disabled={props.disabled}
+            onClick={props.submit}
+        >
             {props.children}
         </Button>
     );

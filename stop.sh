@@ -2,6 +2,6 @@
 
 set -e
 
-docker-compose down
+docker-compose --file ./docker/docker-compose.yml down
 docker volume rm nodeos-data-volume
 docker volume rm keosd-data-volume

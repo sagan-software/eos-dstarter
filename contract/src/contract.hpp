@@ -12,7 +12,7 @@ namespace dapp
 using namespace std;
 using namespace eosio;
 
-class[[eosio::contract("dapp.system")]] system : public eosio::contract
+class[[eosio::contract("contract")]] system : public eosio::contract
 {
   private:
     profiles_table _profiles;

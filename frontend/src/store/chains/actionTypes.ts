@@ -5,11 +5,11 @@ import {
 } from './stateTypes';
 
 export enum ChainsActionType {
-    SetChain = 'chainsSetChain',
-    RemoveChain = 'chainsRemoveChain',
-    AddRpcServer = 'chainsAddRpcServer',
-    RemoveRpcServer = 'chainsRemoveRpcServer',
-    SetRpcServerStatus = 'chainsSetRpcServerStatus',
+    SetChain = 'CHAINS_SET_CHAIN',
+    RemoveChain = 'CHAINS_REMOVE_CHAIN',
+    AddRpcServer = 'CHAINS_ADD_RPC_SERVER',
+    RemoveRpcServer = 'CHAINS_REMOVE_RPC_SERVER',
+    SetRpcServerStatus = 'CHAINS_SET_RPC_SERVER_STATUS',
 }
 
 export type ChainsAction =

@@ -7,7 +7,7 @@ namespace dapp
 using namespace std;
 using namespace eosio;
 
-struct [[ eosio::table, eosio::contract("dapp.system") ]] profile
+struct [[ eosio::table, eosio::contract("contract") ]] profile
 {
     name account;
     string display_name;

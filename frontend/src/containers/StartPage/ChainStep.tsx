@@ -10,9 +10,10 @@ import Paper from '@material-ui/core/Paper';
 import { WithStyles } from '@material-ui/core/styles';
 import RadioButtonChecked from '@material-ui/icons/RadioButtonChecked';
 import RadioButtonUnchecked from '@material-ui/icons/RadioButtonUnchecked';
-import React from 'react';
+import React, { useEffect } from 'react';
 import * as chainsStore from '../../store/chains';
-import * as startPage from '../../store/startPage';
+import * as scatterStore from '../../store/scatter';
+import * as startPageStore from '../../store/startPage';
 import {
     Buttons,
     Container,
@@ -26,9 +27,14 @@ import styles from './styles';
 
 export interface ChainStepProps extends WithStyles<typeof styles> {
     readonly value: string;
-    readonly setChainId: typeof startPage.setChainId;
-    readonly prevStep: typeof startPage.prevStep;
+    readonly setChainId: typeof startPageStore.setChainId;
+    readonly prevStep: typeof startPageStore.prevStep;
+    readonly submitState: startPageStore.SubmitState;
     readonly chains: chainsStore.ChainsState;
+    readonly submit: any;
+    readonly scatterLogin: any;
+    readonly checkAllRpcServers: any;
+    readonly scatter: scatterStore.ScatterState;
 }
 
 function ChainStep({
@@ -37,7 +43,79 @@ function ChainStep({
     setChainId,
     prevStep,
     chains,
+    submit,
+    submitState,
+    scatterLogin,
+    scatter,
+    ...props
 }: ChainStepProps) {
+    const selectedChain = chains.chains[value];
+    const rpcServer = Object.values(chains.rpcServers)
+        .filter(
+            (s) =>
+                s.status.type === chainsStore.RpcServerStatusType.Okay &&
+                s.status.chainId === selectedChain.chainId,
+        )
+        .sort((a, b) => {
+            if (
+                a.status.type === chainsStore.RpcServerStatusType.Okay &&
+                b.status.type === chainsStore.RpcServerStatusType.Okay
+            ) {
+                return a.status.ping - b.status.ping;
+            } else {
+                return 0;
+            }
+        })[0];
+
+    useEffect(() => {
+        props.checkAllRpcServers();
+    }, [1]);
+
+    console.warn(22222222, { selectedChain, rpcServer, chains });
+
+    function handleSubmit() {
+        if (selectedChain && rpcServer) {
+            if (scatter.type === scatterStore.ScatterStateType.Connected) {
+                if (
+                    scatter.identity.type ===
+                    scatterStore.IdentityStateType.LoggedIn
+                ) {
+                    const account = scatter.identity.accounts.filter(
+                        (a) => a.chainId === value,
+                    )[0];
+                    if (account) {
+                        // ready to go
+                        return submit(account, selectedChain, rpcServer);
+                    } else {
+                        // Logout and log back in with this chain id
+                        console.warn(
+                            'TODO logged in but no account for this chain',
+                        );
+                    }
+                } else {
+                    // TODO login
+                    return scatterLogin({
+                        accounts: [
+                            {
+                                name: selectedChain.displayName,
+                                protocol: rpcServer.protocol,
+                                host: rpcServer.host,
+                                port: rpcServer.port,
+                                blockchain: 'eos',
+                                chainId: selectedChain.chainId,
+                            },
+                        ],
+                    });
+                }
+            } else {
+                // TODO not connected
+                console.warn('TODO not connected');
+            }
+        }
+    }
+
+    console.warn(3333333333, submitState);
+
     return (
         <Container classes={classes}>
             <Title classes={classes}>
@@ -71,11 +149,12 @@ function ChainStep({
             </Inner>
             <Buttons classes={classes}>
                 <PrevButton classes={classes} prevStep={prevStep}>
-                    Category
+                    Project Idea
                 </PrevButton>
                 <SubmitButton
                     classes={classes}
-                    disabled={value.length === 0 || value.length > 135}
+                    disabled={!selectedChain || !rpcServer}
+                    submit={handleSubmit}
                 >
                     Continue
                 </SubmitButton>

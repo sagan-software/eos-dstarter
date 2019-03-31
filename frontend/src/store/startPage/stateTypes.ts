@@ -1,11 +1,13 @@
 import Scatter from 'scatterjs-core';
-import { Category } from '../../categories';
+import { Chain, RpcServer } from '../chains';
+import { Category } from '../projects';
 
 export interface StartPageState {
     readonly activeStep: FormStepType;
     readonly category: Category;
     readonly description: string;
     readonly chainId: string;
+    readonly submitState: SubmitState;
 }
 
 export enum FormStepType {
@@ -17,8 +19,15 @@ export enum FormStepType {
 export enum SubmitStateType {
     NotSubmitted,
     Submitting,
-    Error,
+    SubmitOk,
+    SubmitErr,
 }
+
+export type SubmitState =
+    | NotSubmittedState
+    | SubmittingState
+    | SubmitOkState
+    | SubmitErrState;
 
 export interface NotSubmittedState {
     readonly type: SubmitStateType.NotSubmitted;
@@ -26,8 +35,18 @@ export interface NotSubmittedState {
 
 export interface SubmittingState {
     readonly type: SubmitStateType.Submitting;
+}
+
+export interface SubmitOkState {
+    readonly type: SubmitStateType.SubmitOk;
     readonly account: Scatter.Account;
-    readonly network: Scatter.FullNetwork;
+    readonly chain: Chain;
+    readonly draftName: string;
+    readonly transactionId: string;
+}
+
+export interface SubmitErrState {
+    readonly type: SubmitStateType.SubmitErr;
 }
 
 export function getNextStep(step: FormStepType): FormStepType {

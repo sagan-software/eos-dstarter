@@ -9,6 +9,7 @@ const LoginPage = React.lazy(() => import('./LoginPage'));
 const StartPage = React.lazy(() => import('./StartPage'));
 const ExplorePage = React.lazy(() => import('./ExplorePage'));
 const AboutPage = React.lazy(() => import('./AboutPage'));
+const DraftPage = React.lazy(() => import('./DraftPage'));
 
 function App() {
     return (
@@ -21,6 +22,10 @@ function App() {
                 <Route path='/explore' component={ExplorePage} />
                 <Route path='/start' component={StartPage} />
                 <Route path='/login' component={LoginPage} />
+                <Route
+                    path='/projects/:chainIdPrefix/:accountName/:draftName/edit'
+                    component={DraftPage}
+                />
             </Router>
         </React.Suspense>
     );

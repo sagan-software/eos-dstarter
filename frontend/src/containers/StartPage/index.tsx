@@ -26,8 +26,10 @@ export interface Props extends WithStyles<typeof styles> {
     readonly setCategory: typeof startPage.setCategory;
     readonly setDescription: typeof startPage.setDescription;
     readonly setChainId: typeof startPage.setChainId;
+    readonly submit: any;
     readonly chains: chains.ChainsState;
     readonly checkRpcServer: any;
+    readonly checkAllRpcServers: any;
 }
 
 function StartPage(props: Props) {
@@ -48,7 +50,6 @@ function ScatterRequired() {
 }
 
 function ScatterAvailable({ classes, state, ...props }: Props) {
-    console.log(props.scatter);
     return (
         <SiteSkeleton hideFooter hideSiteNav hideUserNav>
             <Helmet>
@@ -75,9 +76,13 @@ function ScatterAvailable({ classes, state, ...props }: Props) {
                         //     'api.eosnewyork.io',
                         //     443,
                         // );
-                        props.scatterLogin({
-                            accounts: [{ chainId: state.chainId }],
-                        });
+                        // props.scatterLogin({
+                        //     accounts: [{ chainId: state.chainId }],
+                        // });
+
+                        // useEffect(() => props.checkAllRpcServers(), [1]);
+                        console.log('!?!?!?!', props.chains);
+                        props.checkAllRpcServers();
                     }}
                 >
                     Click this
@@ -124,7 +129,12 @@ function ActiveStep(props: Props) {
                     value={props.state.chainId}
                     setChainId={props.setChainId}
                     prevStep={props.prevStep}
+                    submit={props.submit}
+                    submitState={props.state.submitState}
                     chains={props.chains}
+                    scatterLogin={props.scatterLogin}
+                    scatter={props.scatter}
+                    checkAllRpcServers={props.checkAllRpcServers}
                 />
         );
     }
@@ -147,7 +157,9 @@ export default withStyles(styles, { withTheme: true })(
             setCategory: startPage.setCategory,
             setDescription: startPage.setDescription,
             setChainId: startPage.setChainId,
+            submit: startPage.submit,
             checkRpcServer: chains.checkRpcServer,
+            checkAllRpcServers: chains.checkAllRpcServers,
         },
     )(StartPage),
 );

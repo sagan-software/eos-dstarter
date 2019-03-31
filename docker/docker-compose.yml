@@ -4,6 +4,7 @@ services:
     nodeosd:
         build:
             dockerfile: ./eos.dockerfile
+            context: .
         image: eos-habit-app:latest
         hostname: nodeosd
         entrypoint: nodeos
@@ -35,6 +36,7 @@ services:
     keosd:
         build:
             dockerfile: ./eos.dockerfile
+            context: .
         image: eos-habit-app:latest
         hostname: keosd
         entrypoint: keosd
@@ -50,7 +52,12 @@ services:
             - "8900"
         volumes:
             - keosd-data-volume:/eos/build/data-dir
-            - ../build/contracts:/contracts:ro
+            - ../contract/build/src:/contracts/dapp.system:ro
+            - ../contract/build/tests/eosio.contracts/contracts/eosio.bios:/contracts/eosio.bios:ro
+            - ../contract/build/tests/eosio.contracts/contracts/eosio.msig:/contracts/eosio.msig:ro
+            - ../contract/build/tests/eosio.contracts/contracts/eosio.system:/contracts/eosio.system:ro
+            - ../contract/build/tests/eosio.contracts/contracts/eosio.token:/contracts/eosio.token:ro
+            - ../contract/build/tests/eosio.contracts/contracts/eosio.wrap:/contracts/eosio.wrap:ro
         links:
             - nodeosd
         stop_grace_period: 10m

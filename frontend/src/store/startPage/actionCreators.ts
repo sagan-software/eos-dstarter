@@ -1,9 +1,9 @@
 import { Api, JsonRpc } from 'eosjs';
 import { Action } from 'redux';
-import { ThunkAction } from 'redux-thunk';
 import Scatter from 'scatterjs-core';
-import { Category } from '../../categories';
+import { AppThunkResult } from '../';
 import { Chain, getRpcServerUrl, RpcServer } from '../chains';
+import { Category } from '../projects';
 import {
     NextStepAction,
     PrevStepAction,
@@ -12,15 +12,11 @@ import {
     SetDescriptionAction,
     StartPageAction,
     StartPageActionType,
+    SubmitErrAction,
+    SubmitOkAction,
 } from './actionTypes';
-import { StartPageState } from './stateTypes';
 
-export type ThunkResult<R> = ThunkAction<
-    R,
-    StartPageState,
-    null,
-    StartPageAction
->;
+export type ThunkResult<R> = AppThunkResult<R, StartPageAction>;
 
 export function nextStep(): NextStepAction {
     return {
@@ -55,19 +51,42 @@ export function setChainId(value: string): SetChainIdAction {
     };
 }
 
+export function submitOk(
+    chain: Chain,
+    account: Scatter.Account,
+    draftName: string,
+    transactionId: string,
+): SubmitOkAction {
+    return {
+        type: StartPageActionType.SubmitOk,
+        chain,
+        account,
+        draftName,
+        transactionId,
+    };
+}
+
+export function submitErr(error: any): SubmitErrAction {
+    return {
+        type: StartPageActionType.SubmitErr,
+        error,
+    };
+}
+
 export function submit(
     account: Scatter.Account,
     chain: Chain,
     rpcServer: RpcServer,
-    network: Scatter.FullNetwork,
 ): ThunkResult<Promise<Action>> {
     return async (dispatch, getState) => {
-        const state = getState();
+        const { startPage } = getState();
+        const draftName = randomName();
         dispatch({
             type: StartPageActionType.Submit,
             account,
             chain,
             rpcServer,
+            draftName,
         });
         const rpcServerUrl = getRpcServerUrl(
             rpcServer.protocol,
@@ -79,37 +98,48 @@ export function submit(
             rpc,
             beta3: true,
         });
-        const result = await eos.transact(
-            {
-                actions: [
-                    {
-                        account: chain.contractName,
-                        name: 'newproject',
-                        authorization: [
-                            {
-                                actor: account.name,
-                                permission: account.authority,
+        try {
+            const result = await eos.transact(
+                {
+                    actions: [
+                        {
+                            account: chain.contractName,
+                            name: 'newproject',
+                            authorization: [
+                                {
+                                    actor: account.name,
+                                    permission: account.authority,
+                                },
+                            ],
+                            data: {
+                                account: account.name,
+                                draft_name: draftName,
+                                category: startPage.category,
+                                description: startPage.description,
                             },
-                        ],
-                        data: {
-                            account: account.name,
-                            draft_name: 'abc123',
-                            category: state.category,
-                            description: state.description,
                         },
-                    },
-                ],
-            },
-            {
-                blocksBehind: 3,
-                expireSeconds: 30,
-            },
-        );
-        console.warn('!!!!!!!!!!', result);
-        return dispatch({
-            type: StartPageActionType.SubmitOk,
-            account,
-            network,
-        });
+                    ],
+                },
+                {
+                    blocksBehind: 3,
+                    expireSeconds: 30,
+                },
+            );
+            console.warn('!!!!!!!!!!', result);
+            return dispatch(
+                submitOk(chain, account, draftName, result.transaction_id),
+            );
+        } catch (error) {
+            return dispatch(submitErr(error));
+        }
     };
+}
+
+function randomName(): string {
+    let text = '';
+    const possible = 'abcdefghijklmnopqrstuvwxyz12345';
+    for (let i = 0; i < 12; i++) {
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+    }
+    return text;
 }

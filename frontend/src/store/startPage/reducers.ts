@@ -16,6 +16,7 @@ import {
     getNextStep,
     getPrevStep,
     StartPageState,
+    SubmitStateType,
 } from './stateTypes';
 
 export const initialState: StartPageState = {
@@ -27,6 +28,7 @@ export const initialState: StartPageState = {
             .sort((a, b) => a.priority - b.priority)
             .map((chain) => chain.chainId)[0] ||
         'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906',
+    submitState: { type: SubmitStateType.NotSubmitted },
 };
 
 export function startPageReducer(
@@ -108,6 +110,9 @@ function onSetChainId(
 function onSubmit(state: StartPageState, action: SubmitAction): StartPageState {
     return {
         ...state,
+        submitState: {
+            type: SubmitStateType.Submitting,
+        },
     };
 }
 
@@ -117,6 +122,13 @@ function onSubmitOk(
 ): StartPageState {
     return {
         ...state,
+        submitState: {
+            type: SubmitStateType.SubmitOk,
+            chain: action.chain,
+            account: action.account,
+            draftName: action.draftName,
+            transactionId: action.transactionId,
+        },
     };
 }
 
@@ -126,5 +138,8 @@ function onSubmitErr(
 ): StartPageState {
     return {
         ...state,
+        submitState: {
+            type: SubmitStateType.SubmitErr,
+        },
     };
 }

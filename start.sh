@@ -4,4 +4,4 @@ set -e
 
 docker volume create --name=nodeos-data-volume
 docker volume create --name=keosd-data-volume
-docker-compose up --abort-on-container-exit
+docker-compose --file ./docker/docker-compose.yml up --abort-on-container-exit

@@ -7,7 +7,7 @@ PRIVKEY="5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3"
 TELOS_PUBKEY="TLOS6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV"
 
 function cleos() {
-    docker-compose exec keosd cleos \
+    docker-compose --file ./docker/docker-compose.yml exec keosd cleos \
         --url http://nodeosd:8888 \
         --wallet-url http://127.0.0.1:8900 \
         "$@"
@@ -44,7 +44,11 @@ function setup_dev_accounts() {
 }
 
 function deploy_contract() {
-    cleos set contract dappcontract contracts/dapp.system
+    cleos set contract \
+        dappcontract \
+        contracts/dapp.system \
+        contract.wasm \
+        contract.abi
 }
 
 setup_dev_chain
