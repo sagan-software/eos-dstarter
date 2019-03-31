@@ -1,17 +1,19 @@
 import {
     AddRpcServerAction,
-    ChainPriority,
     ChainsAction,
     ChainsActionType,
-    ChainsState,
-    getRpcServerUrl,
     RemoveChainAction,
     RemoveRpcServerAction,
-    RpcServerProtocol,
-    RpcServerStatusType,
     SetChainAction,
     SetRpcServerStatusAction,
-} from './types';
+} from './actionTypes';
+import {
+    ChainPriority,
+    ChainsState,
+    getRpcServerUrl,
+    RpcServerProtocol,
+    RpcServerStatusType,
+} from './stateTypes';
 
 export const initialState: ChainsState = {
     chains: {
@@ -79,21 +81,21 @@ export function chainsReducer(
 ): ChainsState {
     switch (action.type) {
     case ChainsActionType.SetChain:
-        return setChain(state, action);
+        return onSetChain(state, action);
     case ChainsActionType.RemoveChain:
-        return removeChain(state, action);
+        return onRemoveChain(state, action);
     case ChainsActionType.AddRpcServer:
-        return addRpcServer(state, action);
+        return onAddRpcServer(state, action);
     case ChainsActionType.RemoveRpcServer:
-        return removeRpcServer(state, action);
+        return onRemoveRpcServer(state, action);
     case ChainsActionType.SetRpcServerStatus:
-        return setRpcServerStatus(state, action);
+        return onSetRpcServerStatus(state, action);
     default:
         return state;
     }
 }
 
-function setChain(state: ChainsState, action: SetChainAction): ChainsState {
+function onSetChain(state: ChainsState, action: SetChainAction): ChainsState {
     return {
         ...state,
         chains: {
@@ -108,7 +110,7 @@ function setChain(state: ChainsState, action: SetChainAction): ChainsState {
     };
 }
 
-function removeChain(
+function onRemoveChain(
     state: ChainsState,
     action: RemoveChainAction,
 ): ChainsState {
@@ -126,7 +128,7 @@ function removeChain(
     }
 }
 
-function addRpcServer(
+function onAddRpcServer(
     state: ChainsState,
     action: AddRpcServerAction,
 ): ChainsState {
@@ -157,7 +159,7 @@ function addRpcServer(
     }
 }
 
-function removeRpcServer(
+function onRemoveRpcServer(
     state: ChainsState,
     action: RemoveRpcServerAction,
 ): ChainsState {
@@ -180,7 +182,7 @@ function removeRpcServer(
     }
 }
 
-function setRpcServerStatus(
+function onSetRpcServerStatus(
     state: ChainsState,
     action: SetRpcServerStatusAction,
 ): ChainsState {

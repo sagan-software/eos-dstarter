@@ -1,12 +1,22 @@
 import * as chains from '../chains';
 import {
+    NextStepAction,
+    PrevStepAction,
+    SetCategoryAction,
+    SetChainIdAction,
+    SetDescriptionAction,
+    StartPageAction,
+    StartPageActionType,
+    SubmitAction,
+    SubmitErrAction,
+    SubmitOkAction,
+} from './actionTypes';
+import {
     FormStepType,
     getNextStep,
     getPrevStep,
-    StartPageAction,
-    StartPageActionType,
     StartPageState,
-} from './types';
+} from './stateTypes';
 
 export const initialState: StartPageState = {
     activeStep: FormStepType.Category,
@@ -25,35 +35,96 @@ export function startPageReducer(
 ) {
     switch (action.type) {
     case StartPageActionType.NextStep:
-        return {
-            ...state,
-            activeStep: getNextStep(state.activeStep),
-        };
+        return onNextStep(state, action);
     case StartPageActionType.PrevStep:
-        return {
-            ...state,
-            activeStep: getPrevStep(state.activeStep),
-        };
+        return onPrevStep(state, action);
     case StartPageActionType.SetCategory:
-        return {
-            ...state,
-            category: action.value,
-        };
+        return onSetCategory(state, action);
     case StartPageActionType.SetDescription:
-        return {
-            ...state,
-            description: action.value,
-        };
+        return onSetDescription(state, action);
     case StartPageActionType.SetChainId:
-        return {
-            ...state,
-            chainId: action.value,
-        };
+        return onSetChainId(state, action);
     case StartPageActionType.Submit:
-        return {
-            ...state,
-        };
+        return onSubmit(state, action);
+    case StartPageActionType.SubmitOk:
+        return onSubmitOk(state, action);
+    case StartPageActionType.SubmitErr:
+        return onSubmitErr(state, action);
     default:
         return state;
     }
+}
+
+function onNextStep(
+    state: StartPageState,
+    action: NextStepAction,
+): StartPageState {
+    return {
+        ...state,
+        activeStep: getNextStep(state.activeStep),
+    };
+}
+
+function onPrevStep(
+    state: StartPageState,
+    action: PrevStepAction,
+): StartPageState {
+    return {
+        ...state,
+        activeStep: getPrevStep(state.activeStep),
+    };
+}
+
+function onSetCategory(
+    state: StartPageState,
+    action: SetCategoryAction,
+): StartPageState {
+    return {
+        ...state,
+        category: action.value,
+    };
+}
+
+function onSetDescription(
+    state: StartPageState,
+    action: SetDescriptionAction,
+): StartPageState {
+    return {
+        ...state,
+        description: action.value,
+    };
+}
+
+function onSetChainId(
+    state: StartPageState,
+    action: SetChainIdAction,
+): StartPageState {
+    return {
+        ...state,
+        chainId: action.value,
+    };
+}
+
+function onSubmit(state: StartPageState, action: SubmitAction): StartPageState {
+    return {
+        ...state,
+    };
+}
+
+function onSubmitOk(
+    state: StartPageState,
+    action: SubmitOkAction,
+): StartPageState {
+    return {
+        ...state,
+    };
+}
+
+function onSubmitErr(
+    state: StartPageState,
+    action: SubmitErrAction,
+): StartPageState {
+    return {
+        ...state,
+    };
 }

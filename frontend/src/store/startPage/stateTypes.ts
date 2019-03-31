@@ -1,3 +1,4 @@
+import Scatter from 'scatterjs-core';
 import { Category } from '../../categories';
 
 export interface StartPageState {
@@ -13,48 +14,20 @@ export enum FormStepType {
     Chain,
 }
 
-export enum StartPageActionType {
-    NextStep = 'startPageNextStep',
-    PrevStep = 'startPagePrevStep',
-    SetCategory = 'startPageSetCategory',
-    SetDescription = 'startPageSetDescription',
-    SetChainId = 'startPageSetChainId',
-    Submit = 'startPageSubmit',
+export enum SubmitStateType {
+    NotSubmitted,
+    Submitting,
+    Error,
 }
 
-export type StartPageAction =
-    | NextStepAction
-    | PrevStepAction
-    | SetCategoryAction
-    | SetDescriptionAction
-    | SetChainIdAction
-    | SubmitAction;
-
-export interface NextStepAction {
-    readonly type: StartPageActionType.NextStep;
+export interface NotSubmittedState {
+    readonly type: SubmitStateType.NotSubmitted;
 }
 
-export interface PrevStepAction {
-    readonly type: StartPageActionType.PrevStep;
-}
-
-export interface SetCategoryAction {
-    readonly type: StartPageActionType.SetCategory;
-    readonly value: Category;
-}
-
-export interface SetDescriptionAction {
-    readonly type: StartPageActionType.SetDescription;
-    readonly value: string;
-}
-
-export interface SetChainIdAction {
-    readonly type: StartPageActionType.SetChainId;
-    readonly value: string;
-}
-
-export interface SubmitAction {
-    readonly type: StartPageActionType.Submit;
+export interface SubmittingState {
+    readonly type: SubmitStateType.Submitting;
+    readonly account: Scatter.Account;
+    readonly network: Scatter.FullNetwork;
 }
 
 export function getNextStep(step: FormStepType): FormStepType {

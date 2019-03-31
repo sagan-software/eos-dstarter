@@ -2,7 +2,6 @@ import {
     ConnectAction,
     ConnectErrAction,
     ConnectOkAction,
-    IdentityStateType,
     LoginAction,
     LoginErrAction,
     LoginOkAction,
@@ -10,12 +9,15 @@ import {
     LogoutOkAction,
     ScatterAction,
     ScatterActionType,
-    ScatterState,
-    ScatterStateType,
     SuggestNetworkAction,
     SuggestNetworkErrAction,
     SuggestNetworkOkAction,
-} from './types';
+} from './actionTypes';
+import {
+    IdentityStateType,
+    ScatterState,
+    ScatterStateType,
+} from './stateTypes';
 
 export const initialState: ScatterState = {
     type: ScatterStateType.Idle,
@@ -27,43 +29,43 @@ export function scatterReducer(
 ): ScatterState {
     switch (action.type) {
     case ScatterActionType.Connect:
-        return connect(
-                state,
-                action,
-            );
+        return onConnect(state, action);
     case ScatterActionType.ConnectOk:
-        return connectOk(state, action);
+        return onConnectOk(state, action);
     case ScatterActionType.ConnectErr:
-        return connectErr(state, action);
+        return onConnectErr(state, action);
     case ScatterActionType.Login:
-        return login(state, action);
+        return onLogin(state, action);
     case ScatterActionType.LoginOk:
-        return loginOk(state, action);
+        return onLoginOk(state, action);
     case ScatterActionType.LoginErr:
-        return loginErr(state, action);
+        return onLoginErr(state, action);
     case ScatterActionType.Logout:
-        return logout(state, action);
+        return onLogout(state, action);
     case ScatterActionType.LogoutOk:
-        return logoutOk(state, action);
+        return onLogoutOk(state, action);
     case ScatterActionType.SuggestNetwork:
-        return suggestNetwork(state, action);
+        return onSuggestNetwork(state, action);
     case ScatterActionType.SuggestNetworkOk:
-        return suggestNetworkOk(state, action);
+        return onSuggestNetworkOk(state, action);
     case ScatterActionType.SuggestNetworkErr:
-        return suggestNetworkErr(state, action);
+        return onSuggestNetworkErr(state, action);
     default:
         return state;
     }
 }
 
-function connect(state: ScatterState, action: ConnectAction): ScatterState {
+function onConnect(state: ScatterState, action: ConnectAction): ScatterState {
     return {
         type: ScatterStateType.Connecting,
         appName: action.appName,
     };
 }
 
-function connectOk(state: ScatterState, action: ConnectOkAction): ScatterState {
+function onConnectOk(
+    state: ScatterState,
+    action: ConnectOkAction,
+): ScatterState {
     return {
         type: ScatterStateType.Connected,
         appName: action.appName,
@@ -73,7 +75,7 @@ function connectOk(state: ScatterState, action: ConnectOkAction): ScatterState {
     };
 }
 
-function connectErr(
+function onConnectErr(
     state: ScatterState,
     action: ConnectErrAction,
 ): ScatterState {
@@ -83,7 +85,7 @@ function connectErr(
     };
 }
 
-function login(state: ScatterState, action: LoginAction): ScatterState {
+function onLogin(state: ScatterState, action: LoginAction): ScatterState {
     if (state.type === ScatterStateType.Connected) {
         return {
             ...state,
@@ -97,7 +99,7 @@ function login(state: ScatterState, action: LoginAction): ScatterState {
     }
 }
 
-function loginOk(state: ScatterState, action: LoginOkAction): ScatterState {
+function onLoginOk(state: ScatterState, action: LoginOkAction): ScatterState {
     if (state.type === ScatterStateType.Connected) {
         return {
             ...state,
@@ -111,7 +113,7 @@ function loginOk(state: ScatterState, action: LoginOkAction): ScatterState {
     }
 }
 
-function loginErr(state: ScatterState, action: LoginErrAction): ScatterState {
+function onLoginErr(state: ScatterState, action: LoginErrAction): ScatterState {
     if (state.type === ScatterStateType.Connected) {
         return {
             ...state,
@@ -125,7 +127,7 @@ function loginErr(state: ScatterState, action: LoginErrAction): ScatterState {
     }
 }
 
-function logout(state: ScatterState, action: LogoutAction): ScatterState {
+function onLogout(state: ScatterState, action: LogoutAction): ScatterState {
     if (state.type === ScatterStateType.Connected) {
         return {
             ...state,
@@ -139,7 +141,7 @@ function logout(state: ScatterState, action: LogoutAction): ScatterState {
     }
 }
 
-function logoutOk(state: ScatterState, action: LogoutOkAction): ScatterState {
+function onLogoutOk(state: ScatterState, action: LogoutOkAction): ScatterState {
     if (state.type === ScatterStateType.Connected) {
         return {
             ...state,
@@ -152,7 +154,7 @@ function logoutOk(state: ScatterState, action: LogoutOkAction): ScatterState {
     }
 }
 
-function suggestNetwork(
+function onSuggestNetwork(
     state: ScatterState,
     action: SuggestNetworkAction,
 ): ScatterState {
@@ -160,7 +162,7 @@ function suggestNetwork(
     return state;
 }
 
-function suggestNetworkOk(
+function onSuggestNetworkOk(
     state: ScatterState,
     action: SuggestNetworkOkAction,
 ): ScatterState {
@@ -168,7 +170,7 @@ function suggestNetworkOk(
     return state;
 }
 
-function suggestNetworkErr(
+function onSuggestNetworkErr(
     state: ScatterState,
     action: SuggestNetworkErrAction,
 ): ScatterState {

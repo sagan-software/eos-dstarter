@@ -1,12 +1,8 @@
 import { Action } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 import Scatter from 'scatterjs-core';
-import ScatterEOS from 'scatterjs-plugin-eosjs2';
-import { ScatterAction, ScatterActionType, ScatterState } from './types';
-
-Scatter.plugins(new ScatterEOS());
-
-(window as any).ScatterJS = Scatter;
+import { ScatterAction, ScatterActionType } from './actionTypes';
+import { ScatterState } from './stateTypes';
 
 export type ThunkResult<R> = ThunkAction<R, ScatterState, null, ScatterAction>;
 

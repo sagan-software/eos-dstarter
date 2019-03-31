@@ -2,19 +2,21 @@ import { Action } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 import {
     AddRpcServerAction,
-    ChainPriority,
     ChainsAction,
     ChainsActionType,
-    ChainsState,
-    getRpcServerUrl,
     RemoveChainAction,
     RemoveRpcServerAction,
+    SetChainAction,
+    SetRpcServerStatusAction,
+} from './actionTypes';
+import {
+    ChainPriority,
+    ChainsState,
+    getRpcServerUrl,
     RpcServerProtocol,
     RpcServerStatus,
     RpcServerStatusType,
-    SetChainAction,
-    SetRpcServerStatusAction,
-} from './types';
+} from './stateTypes';
 
 export type ThunkResult<R> = ThunkAction<R, ChainsState, null, ChainsAction>;
 
