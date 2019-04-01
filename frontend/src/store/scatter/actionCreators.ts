@@ -1,68 +1,95 @@
-import { Action } from 'redux';
-import { ThunkAction } from 'redux-thunk';
 import Scatter from 'scatterjs-core';
-import { ScatterAction, ScatterActionType } from './actionTypes';
-import { ScatterState } from './stateTypes';
+import {
+    ConnectAction,
+    ConnectErrAction,
+    ConnectOkAction,
+    LoginAction,
+    LoginErrAction,
+    LoginOkAction,
+    LogoutAction,
+    LogoutOkAction,
+    ScatterActionType,
+    SuggestNetworkAction,
+    SuggestNetworkErrAction,
+    SuggestNetworkOkAction,
+} from './actionTypes';
 
-export type ThunkResult<R> = ThunkAction<R, ScatterState, null, ScatterAction>;
-
-export function connect(appName: string): ThunkResult<Promise<Action>> {
-    return async (dispatch) => {
-        dispatch({
-            type: ScatterActionType.Connect,
-            appName,
-        });
-        const connected = await Scatter.connect(appName);
-        if (connected) {
-            return dispatch({
-                type: ScatterActionType.ConnectOk,
-                appName,
-                identity: Scatter.identity,
-            });
-        } else {
-            return dispatch({
-                type: ScatterActionType.ConnectErr,
-                appName,
-            });
-        }
+export function connect(appName: string): ConnectAction {
+    return {
+        type: ScatterActionType.Connect,
+        appName,
     };
 }
 
-export function login(
-    options: Scatter.LoginOptions,
-): ThunkResult<Promise<Action>> {
-    return async (dispatch) => {
-        dispatch({
-            type: ScatterActionType.Login,
-            options,
-        });
-        try {
-            const identity = await Scatter.login(options);
-            return dispatch({
-                type: ScatterActionType.LoginOk,
-                identity,
-            });
-        } catch (error) {
-            return dispatch({
-                type: ScatterActionType.LoginErr,
-                error,
-            });
-        }
+export function connectOk(
+    appName: string,
+    identity: Scatter.Identity | void,
+): ConnectOkAction {
+    return {
+        type: ScatterActionType.ConnectOk,
+        appName,
+        identity,
     };
 }
 
-export function logout(
-    identity: Scatter.Identity,
-): ThunkResult<Promise<Action>> {
-    return async (dispatch) => {
-        dispatch({
-            type: ScatterActionType.Logout,
-            identity,
-        });
-        // TODO can this error?
-        await Scatter.logout();
-        return dispatch({
-            type: ScatterActionType.LogoutOk,
-        });
+export function connectErr(appName: string): ConnectErrAction {
+    return {
+        type: ScatterActionType.ConnectErr,
+        appName,
+    };
+}
+
+export function login(options: Scatter.LoginOptions): LoginAction {
+    return {
+        type: ScatterActionType.Login,
+        options,
+    };
+}
+
+export function loginOk(identity: Scatter.Identity): LoginOkAction {
+    return {
+        type: ScatterActionType.LoginOk,
+        identity,
+    };
+}
+
+export function loginErr(error: Scatter.LoginError): LoginErrAction {
+    return {
+        type: ScatterActionType.LoginErr,
+        error,
+    };
+}
+
+export function logout(identity: Scatter.Identity): LogoutAction {
+    return {
+        type: ScatterActionType.Logout,
+        identity,
+    };
+}
+
+export function logoutOk(): LogoutOkAction {
+    return {
+        type: ScatterActionType.LogoutOk,
+    };
+}
+
+export function suggestNetwork(): SuggestNetworkAction {
+    return {
+        type: ScatterActionType.SuggestNetwork,
+    };
+}
+
+export function suggestNetworkOk(): SuggestNetworkOkAction {
+    return {
+        type: ScatterActionType.SuggestNetworkOk,
+    };
+}
+
+export function suggestNetworkErr(
+    error: Scatter.SuggestNetworkError,
+): SuggestNetworkErrAction {
+    return {
+        type: ScatterActionType.SuggestNetworkErr,
+        error,
     };
 }

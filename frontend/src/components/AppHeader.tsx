@@ -3,7 +3,6 @@ import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import PropTypes from 'prop-types';
 import React from 'react';
 import {
     BrowserRouter as Router,
@@ -28,7 +27,7 @@ export interface Props extends WithStyles<typeof styles> {
     readonly hideSiteNav?: boolean;
 }
 
-function SiteHeader(props: Props) {
+function AppHeader(props: Props) {
     return (
         <Grid container spacing={24} justify='center' alignItems='center'>
             <Grid item xs={4} hidden={props.hideSiteNav}>
@@ -50,8 +49,4 @@ function SiteHeader(props: Props) {
     );
 }
 
-SiteHeader.propTypes = {
-    classes: PropTypes.object.isRequired,
-} as any;
-
-export default withStyles(styles)(SiteHeader);
+export default withStyles(styles)(AppHeader);

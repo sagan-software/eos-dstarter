@@ -1,17 +1,17 @@
 import Scatter from 'scatterjs-core';
 
 export enum ScatterActionType {
-    Connect = 'SCATTER_CONNECT',
-    ConnectOk = 'SCATTER_CONNECT_OK',
-    ConnectErr = 'SCATTER_CONNECT_ERR',
-    Login = 'SCATTER_LOGIN',
-    LoginOk = 'SCATTER_LOGIN_OK',
-    LoginErr = 'SCATTER_LOGIN_ERR',
-    Logout = 'SCATTER_LOGOUT',
-    LogoutOk = 'SCATTER_LOGOUT_OK',
-    SuggestNetwork = 'SCATTER_SUGGEST_NETWORK',
-    SuggestNetworkOk = 'SCATTER_SUGGEST_NETWORK_OK',
-    SuggestNetworkErr = 'SCATTER_SUGGEST_NETWORK_ERR',
+    Connect = 'SCATTER/CONNECT',
+    ConnectOk = 'SCATTER/CONNECT_OK',
+    ConnectErr = 'SCATTER/CONNECT_ERR',
+    Login = 'SCATTER/LOGIN',
+    LoginOk = 'SCATTER/LOGIN_OK',
+    LoginErr = 'SCATTER/LOGIN_ERR',
+    Logout = 'SCATTER/LOGOUT',
+    LogoutOk = 'SCATTER/LOGOUT_OK',
+    SuggestNetwork = 'SCATTER/SUGGEST_NETWORK',
+    SuggestNetworkOk = 'SCATTER/SUGGEST_NETWORK_OK',
+    SuggestNetworkErr = 'SCATTER/SUGGEST_NETWORK_ERR',
 }
 
 export type ScatterAction =

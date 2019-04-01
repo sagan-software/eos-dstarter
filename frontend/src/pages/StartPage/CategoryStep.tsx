@@ -8,6 +8,7 @@ import {
     primaryCategories,
 } from '../../store/projects';
 import * as startPage from '../../store/startPage';
+import styles from '../../styles/startPage';
 import {
     Buttons,
     Container,
@@ -16,7 +17,6 @@ import {
     Subtitle,
     Title,
 } from './FormStep';
-import styles from './styles';
 
 export interface CategoryStepProps extends WithStyles<typeof styles> {
     readonly value: Category;

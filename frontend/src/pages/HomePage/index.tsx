@@ -1,11 +1,11 @@
 import React from 'react';
-import SiteSkeleton from '../components/SiteSkeleton';
+import AppSkeleton from '../../components/AppSkeleton';
 
 function HomePage() {
     return (
-        <SiteSkeleton>
+        <AppSkeleton>
             <h2>Home</h2>
-        </SiteSkeleton>
+        </AppSkeleton>
     );
 }
 

@@ -1,6 +1,6 @@
-export * from './actionCreators';
+export * from './actionThunks';
 export * from './actionTypes';
-export * from './reducers';
+export * from './stateReducer';
 export * from './stateTypes';
 
 import Scatter from 'scatterjs-core';

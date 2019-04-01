@@ -1,7 +1,7 @@
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 import React, { Component } from 'react';
-import SiteFooter from './SiteFooter';
-import SiteHeader from './SiteHeader';
+import AppFooter from './AppFooter';
+import AppHeader from './AppHeader';
 
 const styles = {};
 
@@ -15,12 +15,12 @@ export interface Props extends WithStyles<typeof styles> {
 function SiteSkeleton(props: Props) {
     return (
         <div>
-            <SiteHeader
+            <AppHeader
                 hideUserNav={!!props.hideUserNav}
                 hideSiteNav={!!props.hideSiteNav}
             />
             <div>{props.children}</div>
-            {props.hideFooter ? '' : <SiteFooter />}
+            {props.hideFooter ? '' : <AppFooter />}
         </div>
     );
 }

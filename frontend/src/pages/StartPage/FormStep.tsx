@@ -4,7 +4,7 @@ import Typography from '@material-ui/core/Typography';
 import ArrowBack from '@material-ui/icons/ArrowBack';
 import React from 'react';
 import * as startPage from '../../store/startPage';
-import styles from './styles';
+import styles from '../../styles/startPage';
 
 export interface TitleProps extends WithStyles<typeof styles> {
     readonly children?: any;

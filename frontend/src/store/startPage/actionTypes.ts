@@ -1,16 +1,17 @@
 import Scatter from 'scatterjs-core';
-import { Chain, RpcServer } from '../chains';
+import { Chain } from '../chains';
 import { Category } from '../projects';
+import { RpcServer } from '../rpcServers';
 
 export enum StartPageActionType {
-    NextStep = 'START_PAGE_NEXT_STEP',
-    PrevStep = 'START_PAGE_PREV_STEP',
-    SetCategory = 'START_PAGE_SET_CATEGORY',
-    SetDescription = 'START_PAGE_SET_DESCRIPTION',
-    SetChainId = 'START_PAGE_SET_CHAIN_ID',
-    Submit = 'START_PAGE_SUBMIT',
-    SubmitOk = 'START_PAGE_SUBMIT_OK',
-    SubmitErr = 'START_PAGE_SUBMIT_ERR',
+    NextStep = 'START_PAGE/NEXT_STEP',
+    PrevStep = 'START_PAGE/PREV_STEP',
+    SetCategory = 'START_PAGE/SET_CATEGORY',
+    SetDescription = 'START_PAGE/SET_DESCRIPTION',
+    SetChainId = 'START_PAGE/SET_CHAIN_ID',
+    Submit = 'START_PAGE/SUBMIT',
+    SubmitOk = 'START_PAGE/SUBMIT_OK',
+    SubmitErr = 'START_PAGE/SUBMIT_ERR',
 }
 
 export type StartPageAction =

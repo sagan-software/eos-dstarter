@@ -24,7 +24,7 @@ export const initialState: StartPageState = {
     category: 0,
     description: '',
     chainId:
-        Object.values(chains.initialState.chains)
+        Object.values(chains.initialState)
             .sort((a, b) => a.priority - b.priority)
             .map((chain) => chain.chainId)[0] ||
         'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906',

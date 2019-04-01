@@ -6,41 +6,43 @@ import Typography from '@material-ui/core/Typography';
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
-import SiteSkeleton from '../../components/SiteSkeleton';
+import AppSkeleton from '../../components/AppSkeleton';
 import { AppState } from '../../store';
-import * as chains from '../../store/chains';
-import * as scatter from '../../store/scatter';
-import * as startPage from '../../store/startPage';
+import * as chainsStore from '../../store/chains';
+import * as rpcServersStore from '../../store/rpcServers';
+import * as scatterStore from '../../store/scatter';
+import * as startPageStore from '../../store/startPage';
+import styles from '../../styles/startPage';
 import CategoryStep from './CategoryStep';
 import ChainStep from './ChainStep';
 import IdeaStep from './IdeaStep';
-import styles from './styles';
 
 export interface Props extends WithStyles<typeof styles> {
-    readonly scatter: scatter.ScatterState;
+    readonly scatter: scatterStore.ScatterState;
     readonly scatterConnect: any;
     readonly scatterLogin: any;
-    readonly state: startPage.StartPageState;
-    readonly nextStep: typeof startPage.nextStep;
-    readonly prevStep: typeof startPage.prevStep;
-    readonly setCategory: typeof startPage.setCategory;
-    readonly setDescription: typeof startPage.setDescription;
-    readonly setChainId: typeof startPage.setChainId;
+    readonly state: startPageStore.StartPageState;
+    readonly nextStep: typeof startPageStore.nextStep;
+    readonly prevStep: typeof startPageStore.prevStep;
+    readonly setCategory: typeof startPageStore.setCategory;
+    readonly setDescription: typeof startPageStore.setDescription;
+    readonly setChainId: typeof startPageStore.setChainId;
     readonly submit: any;
-    readonly chains: chains.ChainsState;
+    readonly chains: chainsStore.ChainsState;
+    readonly rpcServers: rpcServersStore.RpcServersState;
     readonly checkRpcServer: any;
     readonly checkAllRpcServers: any;
 }
 
 function StartPage(props: Props) {
     switch (props.scatter.type) {
-    case scatter.ScatterStateType.Idle:
+    case scatterStore.ScatterStateType.Idle:
         props.scatterConnect('DStarter');
-    case scatter.ScatterStateType.Connecting:
+    case scatterStore.ScatterStateType.Connecting:
         return <>Loading...</>;
-    case scatter.ScatterStateType.Connected:
+    case scatterStore.ScatterStateType.Connected:
         return <ScatterAvailable {...props} />;
-    case scatter.ScatterStateType.Unavailable:
+    case scatterStore.ScatterStateType.Unavailable:
         return <ScatterRequired />;
     }
 }
@@ -51,7 +53,7 @@ function ScatterRequired() {
 
 function ScatterAvailable({ classes, state, ...props }: Props) {
     return (
-        <SiteSkeleton hideFooter hideSiteNav hideUserNav>
+        <AppSkeleton hideFooter hideSiteNav hideUserNav>
             <Helmet>
                 <title>Create your project</title>
             </Helmet>
@@ -60,33 +62,15 @@ function ScatterAvailable({ classes, state, ...props }: Props) {
                     activeStep={state.activeStep}
                     className={classes.stepper}
                 >
-                    {startPage.formStepTypes.map((formStepType) => (
+                    {startPageStore.formStepTypes.map((formStepType) => (
                         <Step key={formStepType}>
                             <StepLabel>
-                                {startPage.getStepLabel(formStepType)}
+                                {startPageStore.getStepLabel(formStepType)}
                             </StepLabel>
                         </Step>
                     ))}
                 </Stepper>
                 <ActiveStep state={state} classes={classes} {...props} />
-                <div
-                    onClick={() => {
-                        // props.checkRpcServer(
-                        //     chains.RpcServerProtocol.Https,
-                        //     'api.eosnewyork.io',
-                        //     443,
-                        // );
-                        // props.scatterLogin({
-                        //     accounts: [{ chainId: state.chainId }],
-                        // });
-
-                        // useEffect(() => props.checkAllRpcServers(), [1]);
-                        console.log('!?!?!?!', props.chains);
-                        props.checkAllRpcServers();
-                    }}
-                >
-                    Click this
-                </div>
                 <Typography
                     variant='body1'
                     align='center'
@@ -97,13 +81,13 @@ function ScatterAvailable({ classes, state, ...props }: Props) {
                     ability to edit, hide, or delete a project is limited.
                 </Typography>
             </div>
-        </SiteSkeleton>
+        </AppSkeleton>
     );
 }
 
 function ActiveStep(props: Props) {
     switch (props.state.activeStep) {
-    case startPage.FormStepType.Category:
+    case startPageStore.FormStepType.Category:
         return (
                 <CategoryStep
                     classes={props.classes}
@@ -112,7 +96,7 @@ function ActiveStep(props: Props) {
                     nextStep={props.nextStep}
                 />
         );
-    case startPage.FormStepType.Idea:
+    case startPageStore.FormStepType.Idea:
         return (
                 <IdeaStep
                     classes={props.classes}
@@ -122,7 +106,7 @@ function ActiveStep(props: Props) {
                     nextStep={props.nextStep}
                 />
         );
-    case startPage.FormStepType.Chain:
+    case startPageStore.FormStepType.Chain:
         return (
                 <ChainStep
                     classes={props.classes}
@@ -134,6 +118,7 @@ function ActiveStep(props: Props) {
                     chains={props.chains}
                     scatterLogin={props.scatterLogin}
                     scatter={props.scatter}
+                    rpcServers={props.rpcServers}
                     checkAllRpcServers={props.checkAllRpcServers}
                 />
         );
@@ -150,16 +135,16 @@ export default withStyles(styles, { withTheme: true })(
     connect(
         mapStateToProps,
         {
-            scatterConnect: scatter.connect,
-            scatterLogin: scatter.login,
-            nextStep: startPage.nextStep,
-            prevStep: startPage.prevStep,
-            setCategory: startPage.setCategory,
-            setDescription: startPage.setDescription,
-            setChainId: startPage.setChainId,
-            submit: startPage.submit,
-            checkRpcServer: chains.checkRpcServer,
-            checkAllRpcServers: chains.checkAllRpcServers,
+            scatterConnect: scatterStore.connect,
+            scatterLogin: scatterStore.login,
+            nextStep: startPageStore.nextStep,
+            prevStep: startPageStore.prevStep,
+            setCategory: startPageStore.setCategory,
+            setDescription: startPageStore.setDescription,
+            setChainId: startPageStore.setChainId,
+            submit: startPageStore.submit,
+            checkRpcServer: rpcServersStore.checkRpcServer,
+            checkAllRpcServers: rpcServersStore.checkAllRpcServers,
         },
     )(StartPage),
 );

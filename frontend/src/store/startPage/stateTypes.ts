@@ -1,5 +1,5 @@
 import Scatter from 'scatterjs-core';
-import { Chain, RpcServer } from '../chains';
+import { Chain } from '../chains';
 import { Category } from '../projects';
 
 export interface StartPageState {

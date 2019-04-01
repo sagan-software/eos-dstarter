@@ -1,6 +1,6 @@
 import { Theme } from '@material-ui/core/styles';
 
-const styles = (theme: Theme) => ({
+export default (theme: Theme) => ({
     container: {
         maxWidth: '960px',
         margin: '0 auto',
@@ -34,5 +34,3 @@ const styles = (theme: Theme) => ({
         justifyContent: 'space-between',
     },
 });
-
-export default styles;

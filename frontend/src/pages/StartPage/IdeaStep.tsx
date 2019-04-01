@@ -2,6 +2,7 @@ import { WithStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import React from 'react';
 import * as startPage from '../../store/startPage';
+import styles from '../../styles/startPage';
 import {
     Buttons,
     Container,
@@ -11,7 +12,6 @@ import {
     Subtitle,
     Title,
 } from './FormStep';
-import styles from './styles';
 
 export interface IdeaStepProps extends WithStyles<typeof styles> {
     readonly value: string;

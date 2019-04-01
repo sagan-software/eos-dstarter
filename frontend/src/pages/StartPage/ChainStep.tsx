@@ -12,8 +12,10 @@ import RadioButtonChecked from '@material-ui/icons/RadioButtonChecked';
 import RadioButtonUnchecked from '@material-ui/icons/RadioButtonUnchecked';
 import React, { useEffect } from 'react';
 import * as chainsStore from '../../store/chains';
+import * as rpcServersStore from '../../store/rpcServers';
 import * as scatterStore from '../../store/scatter';
 import * as startPageStore from '../../store/startPage';
+import styles from '../../styles/startPage';
 import {
     Buttons,
     Container,
@@ -23,7 +25,6 @@ import {
     Subtitle,
     Title,
 } from './FormStep';
-import styles from './styles';
 
 export interface ChainStepProps extends WithStyles<typeof styles> {
     readonly value: string;
@@ -35,6 +36,7 @@ export interface ChainStepProps extends WithStyles<typeof styles> {
     readonly scatterLogin: any;
     readonly checkAllRpcServers: any;
     readonly scatter: scatterStore.ScatterState;
+    readonly rpcServers: rpcServersStore.RpcServersState;
 }
 
 function ChainStep({
@@ -47,21 +49,22 @@ function ChainStep({
     submitState,
     scatterLogin,
     scatter,
+    rpcServers,
     ...props
 }: ChainStepProps) {
-    const selectedChain = chains.chains[value];
-    const rpcServer = Object.values(chains.rpcServers)
+    const selectedChain = chains[value];
+    const rpcServer = Object.values(rpcServers)
         .filter(
             (s) =>
-                s.status.type === chainsStore.RpcServerStatusType.Okay &&
-                s.status.chainId === selectedChain.chainId,
+                s.status === rpcServersStore.RpcServerStatus.Okay &&
+                s.chainId === selectedChain.chainId,
         )
         .sort((a, b) => {
             if (
-                a.status.type === chainsStore.RpcServerStatusType.Okay &&
-                b.status.type === chainsStore.RpcServerStatusType.Okay
+                a.status === rpcServersStore.RpcServerStatus.Okay &&
+                b.status === rpcServersStore.RpcServerStatus.Okay
             ) {
-                return a.status.ping - b.status.ping;
+                return a.ping - b.ping;
             } else {
                 return 0;
             }
