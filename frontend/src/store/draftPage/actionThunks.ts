@@ -1,17 +1,16 @@
 import { Action } from 'redux';
-import { ThunkAction } from 'redux-thunk';
-import { AppThunkResult } from '..';
-import { getRpcServerUrl, RpcServerStatus } from '../rpcServers';
+import { RootThunkResult } from '../root';
+import { RpcServerStatus } from '../rpcServers';
 import * as actions from './actionCreators';
 import { DraftPageAction } from './actionTypes';
 
-export type ThunkResult<R> = AppThunkResult<R, DraftPageAction>;
+export type ThunkResult<R> = RootThunkResult<R, DraftPageAction>;
 
 export function load(
     chainIdPrefix: string,
     accountName: string,
     draftName: string,
-): ThunkResult<Promise<Action>> {
+): ThunkResult<Promise<DraftPageAction>> {
     return async (dispatch, getState) => {
         const { chains, rpcServers } = getState();
         const chain = Object.values(chains).filter(({ chainId }) =>

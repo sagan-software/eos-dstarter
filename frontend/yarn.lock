@@ -1099,6 +1099,11 @@
   resolved "https://registry.yarnpkg.com/@types/humps/-/humps-1.1.2.tgz#fbcaf596d20ff2ed78f8f511c5d6a943b51101d6"
   integrity sha1-+8r1ltIP8u14+PURxdapQ7URAdY=
 
+"@types/identicon.js@^2.3.0":
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/@types/identicon.js/-/identicon.js-2.3.0.tgz#b1c8df6dbaaabf569b7b2ab3c3a32910f0ea9bc2"
+  integrity sha512-5IcozLuaUkQCjeNqS8GcgEfkWSQB1DdADhrbvmZOCAjdRPPXstR7EqKxf4xA5AfBLCZTlHudIEhVaQca3wiOpQ==
+
 "@types/jest-diff@*":
   version "20.0.1"
   resolved "https://registry.yarnpkg.com/@types/jest-diff/-/jest-diff-20.0.1.tgz#35cc15b9c4f30a18ef21852e255fdb02f6d59b89"
@@ -1261,6 +1266,11 @@
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/@types/unist/-/unist-2.0.3.tgz#9c088679876f374eb5983f150d4787aa6fb32d7e"
   integrity sha512-FvUupuM3rlRsRtCN+fDudtmytGO6iHJuuRKS1Ss0pG5z8oX0diNEw94UEL7hgDbpN94rgaK5R7sWm6RrSkZuAQ==
+
+"@types/url-template@^2.0.28":
+  version "2.0.28"
+  resolved "https://registry.yarnpkg.com/@types/url-template/-/url-template-2.0.28.tgz#b692f0e72108c0165d541f9ab95e572fc966318b"
+  integrity sha512-1i/YtOhvlWDbMDTWhCfvhyUwBS9vNFs78sJOyahoruJCcDbwaSH73AlnuCp7luKPm6qqdCg4VKq/IHUncl6gZA==
 
 "@types/vfile-message@*":
   version "1.0.1"
@@ -5097,6 +5107,11 @@ icss-utils@^2.1.0:
   integrity sha1-g/Cg7DeL8yRheLbCrZE28TWxyWI=
   dependencies:
     postcss "^6.0.1"
+
+identicon.js@^2.3.3:
+  version "2.3.3"
+  resolved "https://registry.yarnpkg.com/identicon.js/-/identicon.js-2.3.3.tgz#c505b8d60ecc6ea13bbd991a33964c44c1ad60a1"
+  integrity sha512-/qgOkXKZ7YbeCYbawJ9uQQ3XJ3uBg9VDpvHjabCAPp6aRMhjLaFAxG90+1TxzrhKaj6AYpVGrx6UXQfQA41UEA==
 
 identity-obj-proxy@3.0.0:
   version "3.0.0"
@@ -10592,6 +10607,11 @@ url-parse@^1.4.3:
   dependencies:
     querystringify "^2.0.0"
     requires-port "^1.0.0"
+
+url-template@^2.0.8:
+  version "2.0.8"
+  resolved "https://registry.yarnpkg.com/url-template/-/url-template-2.0.8.tgz#fc565a3cccbff7730c775f5641f9555791439f21"
+  integrity sha1-/FZaPMy/93MMd19WQflVV5FDnyE=
 
 url@^0.11.0:
   version "0.11.0"

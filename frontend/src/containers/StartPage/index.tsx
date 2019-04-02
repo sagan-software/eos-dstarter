@@ -11,8 +11,8 @@ import AppContainer from '../../components/AppContainer';
 import AppHeader from '../../components/AppHeader';
 import AppLogo from '../../components/AppLogo';
 import AppMain from '../../components/AppMain';
-import { AppState } from '../../store';
 import * as chainsStore from '../../store/chains';
+import { RootState } from '../../store/root';
 import * as rpcServersStore from '../../store/rpcServers';
 import * as scatterStore from '../../store/scatter';
 import * as startPageStore from '../../store/startPage';
@@ -41,7 +41,7 @@ export interface Props extends WithStyles<typeof styles> {
 function StartPage(props: Props) {
     switch (props.scatter.type) {
     case scatterStore.ScatterStateType.Idle:
-        props.scatterConnect('DStarter');
+        props.scatterConnect('weos.fund');
     case scatterStore.ScatterStateType.Connecting:
         return <>Loading...</>;
     case scatterStore.ScatterStateType.Connected:
@@ -132,7 +132,7 @@ function ActiveStep(props: Props) {
     }
 }
 
-const mapStateToProps = (state: AppState) => ({
+const mapStateToProps = (state: RootState) => ({
     scatter: state.scatter,
     state: state.startPage,
     chains: state.chains,

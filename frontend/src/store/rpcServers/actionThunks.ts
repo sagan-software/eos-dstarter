@@ -1,6 +1,6 @@
 import { JsonRpc } from 'eosjs';
 import { Action } from 'redux';
-import { AppThunkResult } from '../';
+import { RootThunkResult } from '../root';
 import * as actions from './actionCreators';
 import { RpcServersAction } from './actionTypes';
 import {
@@ -9,13 +9,13 @@ import {
     RpcServerStatus,
 } from './stateTypes';
 
-export type ThunkResult<R> = AppThunkResult<R, RpcServersAction>;
+export type ThunkResult<R> = RootThunkResult<R, RpcServersAction>;
 
 export function checkRpcServer(
     protocol: RpcServerProtocol,
     host: string,
     port: number,
-): ThunkResult<Promise<Action>> {
+): ThunkResult<Promise<RpcServersAction>> {
     return async (dispatch) => {
         const requestStart = new Date();
         dispatch(actions.setChecking(protocol, host, port, requestStart));

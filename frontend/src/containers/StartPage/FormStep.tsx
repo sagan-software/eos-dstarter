@@ -1,3 +1,4 @@
+import { Fade } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
@@ -93,7 +94,11 @@ export interface DivProps extends WithStyles<typeof styles> {
 }
 
 export function Container(props: DivProps) {
-    return <div className={props.classes.stepContainer}>{props.children}</div>;
+    return (
+        <Fade in>
+            <div className={props.classes.stepContainer}>{props.children}</div>
+        </Fade>
+    );
 }
 
 export function Buttons(props: DivProps) {

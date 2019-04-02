@@ -140,9 +140,7 @@ function ChainStep({
             ) : (
                 <></>
             )}
-            <Title classes={classes}>
-                Finally, select a blockchain to use.
-            </Title>
+            <Title classes={classes}>Finally, select a blockchain.</Title>
             <Subtitle classes={classes}>
                 Tell us what EOSIO blockchain you’re using before we proceed.
             </Subtitle>

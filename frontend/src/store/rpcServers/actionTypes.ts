@@ -1,4 +1,4 @@
-import { RpcServerProtocol, RpcServerStatus } from './stateTypes';
+import { RpcServerProtocol } from './stateTypes';
 
 export enum RpcServersActionType {
     Add = 'RPC_SERVERS/ADD',

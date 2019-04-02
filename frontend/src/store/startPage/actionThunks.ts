@@ -1,19 +1,19 @@
 import { Api, JsonRpc } from 'eosjs';
 import { Action } from 'redux';
 import Scatter from 'scatterjs-core';
-import { AppThunkResult } from '..';
 import { Chain } from '../chains';
+import { RootThunkResult } from '../root';
 import { getRpcServerUrl, RpcServerOkay } from '../rpcServers';
 import * as actions from './actionCreators';
 import { StartPageAction } from './actionTypes';
 
-export type ThunkResult<R> = AppThunkResult<R, StartPageAction>;
+export type ThunkResult<R> = RootThunkResult<R, StartPageAction>;
 
 export function submit(
     account: Scatter.Account,
     chain: Chain,
     rpcServer: RpcServerOkay,
-): ThunkResult<Promise<Action>> {
+): ThunkResult<Promise<StartPageAction>> {
     return async (dispatch, getState) => {
         const { startPage } = getState();
         const draftName = randomName();

@@ -9,14 +9,22 @@ import { connect } from 'react-redux';
 import AppSkeleton from '../../components/AppSkeleton';
 import PageHeader from '../../components/PageHeader';
 import PageTitle from '../../components/PageTitle';
-import { AppState } from '../../store';
+import { RootState } from '../../store/root';
+import * as scatterStore from '../../store/scatter';
 import styles from '../../styles/settingsPage';
 
-export interface Props extends WithStyles<typeof styles> {}
+export interface Props extends WithStyles<typeof styles> {
+    readonly scatter: scatterStore.ScatterState;
+    readonly logout: any;
+}
 
-function SettingsPage({ classes }: Props) {
+function SettingsPage({ classes, ...props }: Props) {
     return (
-        <AppSkeleton classes={classes}>
+        <AppSkeleton
+            classes={classes}
+            scatter={props.scatter}
+            logout={props.logout}
+        >
             <PageHeader classes={classes}>
                 <PageTitle classes={classes}>Settings</PageTitle>
             </PageHeader>
@@ -92,11 +100,13 @@ function SettingsPage({ classes }: Props) {
     );
 }
 
-const mapStateToProps = (state: AppState) => ({});
+const mapStateToProps = (state: RootState) => ({
+    scatter: state.scatter,
+});
 
 export default withStyles(styles, { withTheme: true })(
     connect(
         mapStateToProps,
-        {},
+        { logout: scatterStore.logout },
     )(SettingsPage),
 );

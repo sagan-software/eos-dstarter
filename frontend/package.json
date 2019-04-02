@@ -9,6 +9,7 @@
         "@material-ui/styles": "^3.0.0-alpha.10",
         "@types/classnames": "^2.2.7",
         "@types/humps": "^1.1.2",
+        "@types/identicon.js": "^2.3.0",
         "@types/jest": "24.0.11",
         "@types/node": "11.11.6",
         "@types/normalizr": "^2.0.18",
@@ -24,6 +25,7 @@
         "classnames": "^2.2.6",
         "eosjs": "20.0.0-beta3",
         "humps": "^2.0.1",
+        "identicon.js": "^2.3.3",
         "normalizr": "^3.3.0",
         "prop-types": "^15.7.2",
         "react": "^16.8.5",
@@ -38,7 +40,8 @@
         "reselect": "^4.0.0",
         "scatterjs-core": "^2.7.16",
         "scatterjs-plugin-eosjs2": "^1.5.0",
-        "typescript": "3.3.4000"
+        "typescript": "3.3.4000",
+        "url-template": "^2.0.8"
     },
     "scripts": {
         "start": "cross-env HTTPS=true react-scripts start",

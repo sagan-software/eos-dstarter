@@ -1,10 +1,10 @@
 import { Action } from 'redux';
 import Scatter from 'scatterjs-core';
-import { AppThunkResult } from '..';
+import { RootThunkResult } from '../root';
 import * as actions from './actionCreators';
 import { ScatterAction } from './actionTypes';
 
-export type ThunkResult<R> = AppThunkResult<R, ScatterAction>;
+export type ThunkResult<R> = RootThunkResult<R, ScatterAction>;
 
 export function connect(appName: string): ThunkResult<Promise<Action>> {
     return async (dispatch) => {
@@ -20,7 +20,7 @@ export function connect(appName: string): ThunkResult<Promise<Action>> {
 
 export function login(
     options: Scatter.LoginOptions,
-): ThunkResult<Promise<Action>> {
+): ThunkResult<Promise<ScatterAction>> {
     return async (dispatch) => {
         dispatch(actions.login(options));
         try {
@@ -34,7 +34,7 @@ export function login(
 
 export function logout(
     identity: Scatter.Identity,
-): ThunkResult<Promise<Action>> {
+): ThunkResult<Promise<ScatterAction>> {
     return async (dispatch) => {
         dispatch(actions.logout(identity));
         // TODO can this error?

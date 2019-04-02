@@ -11,8 +11,8 @@ import AppContainer from '../../components/AppContainer';
 import AppHeader from '../../components/AppHeader';
 import AppLogo from '../../components/AppLogo';
 import AppMain from '../../components/AppMain';
-import { AppState } from '../../store';
 import * as draftPageStore from '../../store/draftPage';
+import { RootState } from '../../store/root';
 import * as rpcServersStore from '../../store/rpcServers';
 import styles from '../../styles/draftPage';
 
@@ -133,7 +133,7 @@ function DraftPage({ classes, match, checkAllRpcServers, loadDraft }: Props) {
     );
 }
 
-const mapStateToProps = (state: AppState) => ({
+const mapStateToProps = (state: RootState) => ({
     state: state.draftPage,
 });
 

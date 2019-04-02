@@ -1,15 +1,22 @@
 import { StyleRules, Theme } from '@material-ui/core/styles';
 
 export default (theme: Theme): StyleRules<string> => ({
-    appContainer: {},
-    appFooter: {},
+    appContainer: {
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: '100vw',
+        height: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+    },
     appHeader: {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
         padding: theme.spacing.unit * 2,
-        paddingLeft: theme.spacing.unit * 3,
-        paddingRight: theme.spacing.unit * 3,
+        paddingLeft: theme.spacing.unit * 4,
+        paddingRight: theme.spacing.unit * 4,
         borderBottomStyle: 'solid',
         borderBottomWidth: 1,
         borderBottomColor: theme.palette.grey[300],
@@ -27,18 +34,34 @@ export default (theme: Theme): StyleRules<string> => ({
         flex: 1,
         display: 'flex',
         '& > *': {
-            marginRight: theme.spacing.unit * 2,
+            marginRight: theme.spacing.unit * 4,
         },
     },
     appUserNav: {
         flex: 1,
-        padding: theme.spacing.unit,
-        paddingRight: theme.spacing.unit * 2,
         display: 'flex',
         justifyContent: 'flex-end',
         '& > *': {
-            marginLeft: theme.spacing.unit * 2,
+            marginLeft: theme.spacing.unit * 4,
         },
     },
-    appMain: {},
+    topCategories: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignContent: 'center',
+        borderBottomStyle: 'solid',
+        borderBottomWidth: 1,
+        borderBottomColor: theme.palette.grey[300],
+        '& > *': {
+            margin: theme.spacing.unit * 2,
+        },
+    },
+    appMain: {
+        flex: 1,
+    },
+    appFooter: {
+        borderTopStyle: 'solid',
+        borderTopWidth: 2,
+        borderTopColor: theme.palette.grey[600],
+    },
 });

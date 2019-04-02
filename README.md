@@ -2,42 +2,9 @@
 -   https://www.gofundme.com/
 -   https://www.indiegogo.com
 
-Project
+TODO:
 
--   Has many backers
--   Has a gallery
--   Has a story
--   Has a funding goal
--   Has a funding date
--   Can be flexible funding or all-or-nothing
--   Has many rewards
--   Has a category
--   Has a location
--   Has a creator
-
-Backer
-
--   Has a project ID
--   Has a pledged amount
--   Has an optional pledge reward
--   Has an account name
-
-Reward
-
--   Has a project ID
--   Has an amount
--   Has a title
--   Has a description
--
-
-Start page states
-
--   Waiting for Scatter
--   Scatter not connected
--   Scatter connected - New Project Form
-    -   Category
-    -   Description
-    -   Network
-    -   Is submitting?
-    -   Login error
-    -   Submit error
+-   Check chain ABI to see if contract is deployed
+-   Get chain's core symbol
+    -   In frontend, get_account eosio
+    -   In contract, from rammarket table https://github.com/EOSIO/eosio.contracts/blob/master/contracts/eosio.system/src/eosio.system.cpp#L452

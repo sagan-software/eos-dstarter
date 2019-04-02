@@ -1,8 +1,8 @@
 import { createSelector } from 'reselect';
-import { AppState } from '../';
+import { RootState } from '../root';
 import { RpcServer, RpcServerStatus } from './stateTypes';
 
-export const getRpcServers = (state: AppState) =>
+export const getRpcServers = (state: RootState) =>
     Object.values(state.rpcServers);
 
 export const filterRpcServersByStatus = (
