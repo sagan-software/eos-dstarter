@@ -1,28 +1,30 @@
-import { withStyles, WithStyles } from '@material-ui/core/styles';
-import React, { Component } from 'react';
+import { WithStyles } from '@material-ui/core/styles';
+import React from 'react';
+import styles from '../styles/appStyles';
+import AppContainer from './AppContainer';
 import AppFooter from './AppFooter';
 import AppHeader from './AppHeader';
-
-const styles = {};
+import AppLogo from './AppLogo';
+import AppMain from './AppMain';
+import AppSiteNav from './AppSiteNav';
+import AppUserNav from './AppUserNav';
 
 export interface Props extends WithStyles<typeof styles> {
     readonly children?: any;
-    readonly hideUserNav?: boolean;
-    readonly hideSiteNav?: boolean;
-    readonly hideFooter?: boolean;
 }
 
-function SiteSkeleton(props: Props) {
+function AppSkeleton({ classes, children }: Props) {
     return (
-        <div>
-            <AppHeader
-                hideUserNav={!!props.hideUserNav}
-                hideSiteNav={!!props.hideSiteNav}
-            />
-            <div>{props.children}</div>
-            {props.hideFooter ? '' : <AppFooter />}
-        </div>
+        <AppContainer classes={classes}>
+            <AppHeader classes={classes}>
+                <AppSiteNav classes={classes} />
+                <AppLogo classes={classes} />
+                <AppUserNav classes={classes} />
+            </AppHeader>
+            <AppMain classes={classes}>{children}</AppMain>
+            <AppFooter classes={classes} />
+        </AppContainer>
     );
 }
 
-export default withStyles(styles)(SiteSkeleton);
+export default AppSkeleton;

@@ -1,7 +1,7 @@
 import { WithStyles } from '@material-ui/core/styles';
 import classNames from 'classnames';
 import React from 'react';
-import styles from '../styles/appStyles';
+import styles from '../styles/page';
 
 export interface Props
     extends WithStyles<typeof styles>,
@@ -10,15 +10,15 @@ export interface Props
             HTMLElement
         > {}
 
-function AppFooter({ classes, ...props }: Props) {
+function PageHeader({ classes, ...props }: Props) {
     return (
-        <footer
+        <header
             {...props}
-            className={classNames(classes.appFooter, props.className)}
+            className={classNames(classes.pageHeader, props.className)}
         >
-            Footer
-        </footer>
+            {props.children}
+        </header>
     );
 }
 
-export default AppFooter;
+export default PageHeader;

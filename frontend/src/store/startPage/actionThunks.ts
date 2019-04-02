@@ -3,7 +3,7 @@ import { Action } from 'redux';
 import Scatter from 'scatterjs-core';
 import { AppThunkResult } from '..';
 import { Chain } from '../chains';
-import { getRpcServerUrl, RpcServer } from '../rpcServers';
+import { getRpcServerUrl, RpcServerOkay } from '../rpcServers';
 import * as actions from './actionCreators';
 import { StartPageAction } from './actionTypes';
 
@@ -12,7 +12,7 @@ export type ThunkResult<R> = AppThunkResult<R, StartPageAction>;
 export function submit(
     account: Scatter.Account,
     chain: Chain,
-    rpcServer: RpcServer,
+    rpcServer: RpcServerOkay,
 ): ThunkResult<Promise<Action>> {
     return async (dispatch, getState) => {
         const { startPage } = getState();

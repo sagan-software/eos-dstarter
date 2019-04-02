@@ -1,7 +1,7 @@
 import Scatter from 'scatterjs-core';
 import { Chain } from '../chains';
 import { Category } from '../projects';
-import { RpcServer } from '../rpcServers';
+import { RpcServerOkay } from '../rpcServers';
 import {
     NextStepAction,
     PrevStepAction,
@@ -50,7 +50,7 @@ export function setChainId(value: string): SetChainIdAction {
 export function submit(
     account: Scatter.Account,
     chain: Chain,
-    rpcServer: RpcServer,
+    rpcServer: RpcServerOkay,
     draftName: string,
 ): SubmitAction {
     return {

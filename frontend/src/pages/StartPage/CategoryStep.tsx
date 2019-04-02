@@ -1,3 +1,6 @@
+import { FormControl, Paper } from '@material-ui/core';
+import FilledInput from '@material-ui/core/FilledInput';
+import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import { WithStyles } from '@material-ui/core/styles';
@@ -41,13 +44,14 @@ function CategoryStep({
                 <Select
                     value={value}
                     onChange={(e) => setCategory(parseInt(e.target.value, 10))}
-                    inputProps={{
-                        name: 'category',
-                        id: 'category',
-                    }}
-                    placeholder='Select your category'
+                    displayEmpty
                     fullWidth
+                    classes={{
+                        icon: classes.categorySelectIcon,
+                        selectMenu: classes.categorySelectMenu,
+                    }}
                 >
+                    <MenuItem value={undefined}>Select your category</MenuItem>
                     {primaryCategories.map((c) => (
                         <MenuItem key={c} value={c}>
                             {getPrimaryCategoryName(c)}
@@ -56,10 +60,11 @@ function CategoryStep({
                 </Select>
             </Inner>
             <Buttons classes={classes}>
+                <div />
                 <NextButton
                     classes={classes}
                     nextStep={nextStep}
-                    disabled={value === 0}
+                    disabled={!value}
                 >
                     Next: Project Idea
                 </NextButton>

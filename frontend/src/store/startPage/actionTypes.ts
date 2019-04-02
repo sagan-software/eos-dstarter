@@ -1,7 +1,7 @@
 import Scatter from 'scatterjs-core';
 import { Chain } from '../chains';
 import { Category } from '../projects';
-import { RpcServer } from '../rpcServers';
+import { RpcServerOkay } from '../rpcServers';
 
 export enum StartPageActionType {
     NextStep = 'START_PAGE/NEXT_STEP',
@@ -51,7 +51,7 @@ export interface SubmitAction {
     readonly type: StartPageActionType.Submit;
     readonly account: Scatter.Account;
     readonly chain: Chain;
-    readonly rpcServer: RpcServer;
+    readonly rpcServer: RpcServerOkay;
     readonly draftName: string;
 }
 

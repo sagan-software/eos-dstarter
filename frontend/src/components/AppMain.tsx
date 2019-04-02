@@ -10,15 +10,15 @@ export interface Props
             HTMLElement
         > {}
 
-function AppFooter({ classes, ...props }: Props) {
+function AppMain({ classes, ...props }: Props) {
     return (
-        <footer
+        <main
             {...props}
-            className={classNames(classes.appFooter, props.className)}
+            className={classNames(classes.appMain, props.className)}
         >
-            Footer
-        </footer>
+            {props.children}
+        </main>
     );
 }
 
-export default AppFooter;
+export default AppMain;

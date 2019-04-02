@@ -1,3 +1,4 @@
+import Link from '@material-ui/core/Link';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import Stepper from '@material-ui/core/Stepper';
@@ -6,7 +7,10 @@ import Typography from '@material-ui/core/Typography';
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
-import AppSkeleton from '../../components/AppSkeleton';
+import AppContainer from '../../components/AppContainer';
+import AppHeader from '../../components/AppHeader';
+import AppLogo from '../../components/AppLogo';
+import AppMain from '../../components/AppMain';
 import { AppState } from '../../store';
 import * as chainsStore from '../../store/chains';
 import * as rpcServersStore from '../../store/rpcServers';
@@ -53,11 +57,14 @@ function ScatterRequired() {
 
 function ScatterAvailable({ classes, state, ...props }: Props) {
     return (
-        <AppSkeleton hideFooter hideSiteNav hideUserNav>
+        <AppContainer classes={classes}>
             <Helmet>
                 <title>Create your project</title>
             </Helmet>
-            <div className={classes.container}>
+            <AppHeader classes={classes}>
+                <AppLogo classes={classes} />
+            </AppHeader>
+            <AppMain classes={classes}>
                 <Stepper
                     activeStep={state.activeStep}
                     className={classes.stepper}
@@ -80,8 +87,8 @@ function ScatterAvailable({ classes, state, ...props }: Props) {
                     supported EOSIO blockchain. Please note: after launch, your
                     ability to edit, hide, or delete a project is limited.
                 </Typography>
-            </div>
-        </AppSkeleton>
+            </AppMain>
+        </AppContainer>
     );
 }
 
@@ -129,6 +136,7 @@ const mapStateToProps = (state: AppState) => ({
     scatter: state.scatter,
     state: state.startPage,
     chains: state.chains,
+    rpcServers: state.rpcServers,
 });
 
 export default withStyles(styles, { withTheme: true })(

@@ -1,7 +1,7 @@
 import Button from '@material-ui/core/Button';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import ArrowBack from '@material-ui/icons/ArrowBack';
+import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import React from 'react';
 import * as startPage from '../../store/startPage';
 import styles from '../../styles/startPage';
@@ -13,7 +13,7 @@ export interface TitleProps extends WithStyles<typeof styles> {
 export function Title(props: TitleProps) {
     return (
         <Typography
-            variant='headline'
+            variant='h4'
             align='center'
             className={props.classes.stepTitle}
             gutterBottom
@@ -26,7 +26,7 @@ export function Title(props: TitleProps) {
 export function Subtitle(props: TitleProps) {
     return (
         <Typography
-            variant='subheading'
+            variant='body1'
             align='center'
             className={props.classes.stepSubtitle}
             gutterBottom
@@ -44,7 +44,7 @@ export interface PrevButtonProps extends WithStyles<typeof styles> {
 export function PrevButton(props: PrevButtonProps) {
     return (
         <Button onClick={() => props.prevStep()}>
-            <ArrowBack />
+            <KeyboardArrowLeft />
             {props.children}
         </Button>
     );

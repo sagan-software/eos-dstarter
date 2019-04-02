@@ -1,36 +1,56 @@
-import { Theme } from '@material-ui/core/styles';
+import { StyleRules, Theme } from '@material-ui/core/styles';
+import getAppStyles from './appStyles';
 
-export default (theme: Theme) => ({
-    container: {
-        maxWidth: '960px',
-        margin: '0 auto',
-    },
-    stepper: {
-        background: 'transparent',
-    },
-    footer: {
-        margin: '0 auto',
-        maxWidth: '460px',
-        opacity: 0.5,
-    },
-    stepContainer: {
-        maxWidth: '460px',
-        margin: theme.spacing.unit * 6,
-        marginLeft: 'auto',
-        marginRight: 'auto',
-    },
-    stepTitle: {},
-    stepSubtitle: {},
-    stepInner: {
-        margin: theme.spacing.unit * 3,
-        marginLeft: 0,
-        marginRight: 0,
-    },
-    stepButtons: {
-        margin: theme.spacing.unit * 3,
-        marginLeft: 0,
-        marginRight: 0,
-        display: 'flex',
-        justifyContent: 'space-between',
-    },
-});
+export default function(theme: Theme): StyleRules<string> {
+    const appStyles = getAppStyles(theme);
+    return {
+        ...appStyles,
+        appHeader: {
+            ...appStyles.appHeader,
+            borderBottomWidth: 0,
+        },
+        appMain: {
+            ...appStyles.appMain,
+            maxWidth: '960px',
+            margin: '0 auto',
+        },
+        stepper: {
+            background: 'transparent',
+        },
+        footer: {
+            margin: '0 auto',
+            maxWidth: '460px',
+            opacity: 0.6,
+            fontSize: theme.typography.body2.fontSize,
+        },
+        stepContainer: {
+            maxWidth: '500px',
+            marginTop: theme.spacing.unit * 6,
+            marginLeft: 'auto',
+            marginRight: 'auto',
+        },
+        stepTitle: {},
+        stepSubtitle: {
+            opacity: 0.6,
+        },
+        stepInner: {
+            margin: theme.spacing.unit * 5,
+            marginLeft: 0,
+            marginRight: 0,
+        },
+        stepButtons: {
+            margin: theme.spacing.unit * 5,
+            marginLeft: 0,
+            marginRight: 0,
+            display: 'flex',
+            justifyContent: 'space-between',
+        },
+        categorySelectMenu: {
+            padding: theme.spacing.unit * 2,
+            fontSize: theme.typography.h6.fontSize,
+        },
+        categorySelectIcon: {
+            right: theme.spacing.unit * 2,
+        },
+    };
+}

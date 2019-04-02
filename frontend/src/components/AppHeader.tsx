@@ -1,52 +1,24 @@
-import Button, { ButtonProps } from '@material-ui/core/Button';
-import Grid from '@material-ui/core/Grid';
-import IconButton from '@material-ui/core/IconButton';
-import { withStyles, WithStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
+import { WithStyles } from '@material-ui/core/styles';
+import classNames from 'classnames';
 import React from 'react';
-import {
-    BrowserRouter as Router,
-    Link,
-    LinkProps,
-    Route,
-} from 'react-router-dom';
+import styles from '../styles/appStyles';
 
-function UserNav() {
-    const MyLink = (props: any) => <Link to='/login' {...props} />;
+export interface Props
+    extends WithStyles<typeof styles>,
+        React.DetailedHTMLProps<
+            React.HTMLAttributes<HTMLElement>,
+            HTMLElement
+        > {}
+
+function AppHeader({ classes, ...props }: Props) {
     return (
-        <Button color='inherit' component={MyLink}>
-            Login
-        </Button>
+        <header
+            {...props}
+            className={classNames(classes.appHeader, props.className)}
+        >
+            {props.children}
+        </header>
     );
 }
 
-const styles = {};
-
-export interface Props extends WithStyles<typeof styles> {
-    readonly hideUserNav?: boolean;
-    readonly hideSiteNav?: boolean;
-}
-
-function AppHeader(props: Props) {
-    return (
-        <Grid container spacing={24} justify='center' alignItems='center'>
-            <Grid item xs={4} hidden={props.hideSiteNav}>
-                <Link to='/explore'>Explore</Link>
-                <Link to='/start'>Start a project</Link>
-            </Grid>
-            <Grid item xs>
-                <Link to='/'>
-                    <Typography variant='h6' color='inherit' align='center'>
-                        EOSFUNDER
-                    </Typography>
-                </Link>
-            </Grid>
-            <Grid item xs={4} hidden={props.hideSiteNav}>
-                <Link to='/start'>Search</Link>
-                <UserNav />
-            </Grid>
-        </Grid>
-    );
-}
-
-export default withStyles(styles)(AppHeader);
+export default AppHeader;

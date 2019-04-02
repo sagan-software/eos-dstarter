@@ -43,6 +43,7 @@ function IdeaStep({
                     rowsMax='4'
                     helperText={`${value.length} / 135`}
                     fullWidth
+                    error={value.length > 135}
                 />
             </Inner>
             <Buttons classes={classes}>

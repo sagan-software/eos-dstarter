@@ -6,19 +6,19 @@ import styles from '../styles/appStyles';
 export interface Props
     extends WithStyles<typeof styles>,
         React.DetailedHTMLProps<
-            React.HTMLAttributes<HTMLElement>,
-            HTMLElement
+            React.HTMLAttributes<HTMLDivElement>,
+            HTMLDivElement
         > {}
 
-function AppFooter({ classes, ...props }: Props) {
+function AppContainer({ classes, ...props }: Props) {
     return (
-        <footer
+        <div
             {...props}
-            className={classNames(classes.appFooter, props.className)}
+            className={classNames(classes.appContainer, props.className)}
         >
-            Footer
-        </footer>
+            {props.children}
+        </div>
     );
 }
 
-export default AppFooter;
+export default AppContainer;

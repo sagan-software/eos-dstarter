@@ -11,6 +11,8 @@ import { WithStyles } from '@material-ui/core/styles';
 import RadioButtonChecked from '@material-ui/icons/RadioButtonChecked';
 import RadioButtonUnchecked from '@material-ui/icons/RadioButtonUnchecked';
 import React, { useEffect } from 'react';
+import { Redirect } from 'react-router';
+import { draftRoute, getRouteString } from '../../routes';
 import * as chainsStore from '../../store/chains';
 import * as rpcServersStore from '../../store/rpcServers';
 import * as scatterStore from '../../store/scatter';
@@ -77,7 +79,11 @@ function ChainStep({
     console.warn(22222222, { selectedChain, rpcServer, chains });
 
     function handleSubmit() {
-        if (selectedChain && rpcServer) {
+        if (
+            selectedChain &&
+            rpcServer &&
+            rpcServer.status === rpcServersStore.RpcServerStatus.Okay
+        ) {
             if (scatter.type === scatterStore.ScatterStateType.Connected) {
                 if (
                     scatter.identity.type ===
@@ -121,6 +127,19 @@ function ChainStep({
 
     return (
         <Container classes={classes}>
+            {submitState.type === startPageStore.SubmitStateType.SubmitOk ? (
+                <Redirect
+                    to={getRouteString(
+                        draftRoute(
+                            submitState.chain.chainId,
+                            submitState.account.name,
+                            submitState.draftName,
+                        ),
+                    )}
+                />
+            ) : (
+                <></>
+            )}
             <Title classes={classes}>
                 Finally, select a blockchain to use.
             </Title>
@@ -131,7 +150,7 @@ function ChainStep({
                 <Paper>
                     <List>
                         {/* TODO: No chains */}
-                        {Object.values(chains.chains).map((chain) => (
+                        {Object.values(chains).map((chain) => (
                             <ListItem
                                 button
                                 key={chain.chainId}
@@ -156,7 +175,12 @@ function ChainStep({
                 </PrevButton>
                 <SubmitButton
                     classes={classes}
-                    disabled={!selectedChain || !rpcServer}
+                    disabled={
+                        !selectedChain ||
+                        !rpcServer ||
+                        submitState.type !==
+                            startPageStore.SubmitStateType.NotSubmitted
+                    }
                     submit={handleSubmit}
                 >
                     Continue

@@ -14,7 +14,8 @@
         "no-console": [true, "log"],
         "semicolon": [true, "always"],
         "ter-indent": [true, 4],
-        "react-hooks-nesting": "error"
+        "react-hooks-nesting": "error",
+        "object-literal-key-quotes": [true, "as-needed"]
     },
     "rulesDirectory": []
 }
