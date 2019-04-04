@@ -1,5 +1,3 @@
-// export { loadOk, loadErr } from './actionCreators';
-export * from './actionThunks';
-export * from './actionTypes';
-export * from './stateReducer';
-export * from './stateTypes';
+export { reducer } from './reducer';
+export * from './state';
+export * from './thunk';

@@ -1,65 +1,63 @@
 import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
-import AppLoading from '../components/AppLoading';
-import { getRouteTemplate, RouteType } from '../routes';
-import * as appStore from '../store/app';
-import { RootState } from '../store/root';
+import * as Router from 'react-router-dom';
+import * as Site from '../components/Site';
+import * as Route from '../route';
+import * as Store from '../store';
 
 const HomePage = React.lazy(() => import('./HomePage'));
-const LoginPage = React.lazy(() => import('./LoginPage'));
-const StartPage = React.lazy(() => import('./StartPage'));
-const ExplorePage = React.lazy(() => import('./ExplorePage'));
-const AboutPage = React.lazy(() => import('./AboutPage'));
-const SettingsPage = React.lazy(() => import('./SettingsPage'));
-const DraftPage = React.lazy(() => import('./DraftPage'));
+// const LoginPage = React.lazy(() => import('./LoginPage'));
+// const StartPage = React.lazy(() => import('./StartPage'));
+// const ExplorePage = React.lazy(() => import('./ExplorePage'));
+// const AboutPage = React.lazy(() => import('./AboutPage'));
+// const SettingsPage = React.lazy(() => import('./SettingsPage'));
+// const DraftPage = React.lazy(() => import('./DraftPage'));
 
-export interface Props {
-    readonly init: any;
-}
+function App() {
+    const dispatch = Store.useDispatch();
 
-function App(props: Props) {
     useEffect(() => {
-        props.init();
-    }, [true]);
+        console.log(1111111111111111);
+        (dispatch as any)(Store.App.init());
+    }, []);
+
+    // useEffect(() => {
+    //     props.init();
+    // }, [true]);
     return (
-        <React.Suspense fallback={<AppLoading />}>
-            <Router>
-                <Route
+        <React.Suspense fallback={<Site.Loading />}>
+            <Router.BrowserRouter>
+                <Router.Route
                     exact
-                    path={getRouteTemplate(RouteType.Home)}
+                    path={Route.getRouteTemplate(Route.Type.Home)}
                     component={HomePage}
                 />
-                <Route
-                    path={getRouteTemplate(RouteType.About)}
+                {/* <Router.Route
+                    path={Route.getRouteTemplate(Route.Type.About)}
                     component={AboutPage}
                 />
-                <Route
-                    path={getRouteTemplate(RouteType.Explore)}
+                <Router.Route
+                    path={Route.getRouteTemplate(Route.Type.Explore)}
                     component={ExplorePage}
                 />
-                <Route
-                    path={getRouteTemplate(RouteType.Start)}
+                <Router.Route
+                    path={Route.getRouteTemplate(Route.Type.Start)}
                     component={StartPage}
                 />
-                <Route
-                    path={getRouteTemplate(RouteType.Login)}
+                <Router.Route
+                    path={Route.getRouteTemplate(Route.Type.Login)}
                     component={LoginPage}
                 />
-                <Route
-                    path={getRouteTemplate(RouteType.Settings)}
+                <Router.Route
+                    path={Route.getRouteTemplate(Route.Type.Settings)}
                     component={SettingsPage}
                 />
-                <Route
-                    path={getRouteTemplate(RouteType.Draft)}
+                <Router.Route
+                    path={Route.getRouteTemplate(Route.Type.Draft)}
                     component={DraftPage}
-                />
-            </Router>
+                /> */}
+            </Router.BrowserRouter>
         </React.Suspense>
     );
 }
 
-export default connect(
-    (state: RootState) => ({}),
-    { init: appStore.init },
-)(App);
+export default App;

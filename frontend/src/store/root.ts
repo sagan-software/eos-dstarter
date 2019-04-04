@@ -1,31 +1,39 @@
 import { Action, combineReducers } from 'redux';
-import { ThunkAction } from 'redux-thunk';
-import { ChainsAction, chainsReducer } from './chains';
-import { DraftPageAction, draftPageReducer } from './draftPage';
-import { RpcServersAction, rpcServersReducer } from './rpcServers';
-import { ScatterAction, scatterReducer } from './scatter';
-import { StartPageAction, startPageReducer } from './startPage';
+import * as ReduxThunk from 'redux-thunk';
+import * as Chains from './chains';
+import { Action as ChainsAction } from './chains/action';
+import * as DraftPage from './draftPage';
+import { Action as DraftPageAction } from './draftPage/action';
+import * as RpcServers from './rpcServers';
+import { Action as RpcServersAction } from './rpcServers/action';
+import * as Scatter from './scatter';
+import { Action as ScatterAction } from './scatter/action';
+import * as StartPage from './startPage';
+import { Action as StartPageAction } from './startPage/action';
 
-export const rootReducer = combineReducers({
-    scatter: scatterReducer,
-    startPage: startPageReducer,
-    chains: chainsReducer,
-    draftPage: draftPageReducer,
-    rpcServers: rpcServersReducer,
+export const reducer = combineReducers({
+    scatter: Scatter.reducer,
+    startPage: StartPage.reducer,
+    chains: Chains.reducer,
+    draftPage: DraftPage.reducer,
+    rpcServers: RpcServers.reducer,
 });
 
-export type RootState = ReturnType<typeof rootReducer>;
+export type State = ReturnType<typeof reducer>;
 
-export type RootAction =
+export type BasicAction =
     | ChainsAction
     | DraftPageAction
     | RpcServersAction
     | ScatterAction
     | StartPageAction;
 
-export type RootThunkResult<R, A extends Action<any>> = ThunkAction<
-    R,
-    RootState,
-    null,
-    A
->;
+export interface ThunkAction<R, A extends Action> extends Action {
+    <E>(
+        dispatch: ReduxThunk.ThunkDispatch<State, E, A>,
+        getState: () => State,
+        extraArgument: E,
+    ): R;
+}
+
+export type Action = BasicAction | ThunkAction<any, BasicAction>;
