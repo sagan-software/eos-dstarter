@@ -2,15 +2,20 @@ import { createSelector } from 'reselect';
 import * as Root from '../root';
 import * as State from './state';
 
-export const getRpcServers = (rootState: Root.State) =>
+export const getAll = (rootState: Root.State): ReadonlyArray<State.Server> =>
     Object.values(rootState.rpcServers);
 
-export const filterRpcServersByStatus = (
+export const getByStatus = (status: State.Status) => (
+    state: Root.State,
+): ReadonlyArray<State.Server> =>
+    getAll(state).filter((s) => s.status === status);
+
+export const filterByStatus = (
     rpcServers: State.Server[],
     status: State.Status,
 ) => rpcServers.filter((rpcServer) => rpcServer.status === status);
 
-export const filterRpcServersByChainIdPrefix = (
+export const filterByChainIdPrefix = (
     rpcServers: State.Server[],
     chainIdPrefix: string,
 ) =>
@@ -20,7 +25,7 @@ export const filterRpcServersByChainIdPrefix = (
             rpcServer.chainId.startsWith(chainIdPrefix),
     );
 
-export const sortRpcServersByPing = (rpcServers: State.Server[]) =>
+export const sortByPing = (rpcServers: State.Server[]) =>
     rpcServers.sort((a, b) => {
         if (a.status === State.Status.Ok) {
             if (b.status === State.Status.Ok) {
@@ -36,6 +41,34 @@ export const sortRpcServersByPing = (rpcServers: State.Server[]) =>
             }
         }
     });
+
+export const getBest = (
+    state: Root.State,
+): { [chainId: string]: State.ServerOk } =>
+    getAll(state).reduce(
+        (acc: { [chainId: string]: State.ServerOk }, server) => {
+            if (server.status === State.Status.Ok) {
+                const chainId = server.chainId;
+                const existing = acc[chainId];
+                if (!existing || (existing && existing.ping > server.ping)) {
+                    acc[chainId] = server;
+                }
+            }
+            return acc;
+        },
+        {},
+    );
+
+export const getBestByChainId = (chainId: string) => (
+    state: Root.State,
+): State.ServerOk | void => getBest(state)[chainId];
+
+export const getBestByChainIdPrefix = (chainIdPrefix: string) => (
+    state: Root.State,
+): State.ServerOk | void =>
+    Object.values(getBest(state)).filter((s) =>
+        s.chainId.startsWith(chainIdPrefix),
+    )[0];
 
 // export const getBestRpcServer = (chainIdPrefix: string) =>
 //     createSelector(

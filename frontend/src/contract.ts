@@ -1,16 +1,19 @@
 import * as Eos from 'eosjs';
+import isEqual from 'lodash.isequal';
 
-export const abi = require('./contract.abi.json');
+type Abi = Eos.RpcInterfaces.Abi;
+
+export const abi: Abi = require('./contract.abi.json');
 // import wasm from '../../contract/build/src/contract.wasm';
 
-export function isValidAbi(other: Eos.RpcInterfaces.Abi): boolean {
+export function isValidAbi(other: Abi): boolean {
     return (
         other &&
         other.version === abi.version &&
-        other.actions === abi.actions &&
-        other.structs === abi.structs &&
-        other.tables === abi.tables &&
-        other.types === abi.types &&
-        other.variants === abi.variants
+        isEqual(abi.actions, other.actions) &&
+        isEqual(abi.structs, other.structs) &&
+        isEqual(abi.tables, other.tables) &&
+        isEqual(abi.types, other.types) &&
+        isEqual(abi.variants, other.variants)
     );
 }

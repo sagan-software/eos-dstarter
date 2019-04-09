@@ -15,7 +15,9 @@
         "semicolon": [true, "always"],
         "ter-indent": [true, 4],
         "react-hooks-nesting": "error",
-        "object-literal-key-quotes": [true, "as-needed"]
+        "object-literal-key-quotes": [true, "as-needed"],
+        "no-any": true,
+        "no-unsafe-any": true
     },
     "rulesDirectory": []
 }

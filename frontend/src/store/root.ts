@@ -1,39 +1,45 @@
 import { Action, combineReducers } from 'redux';
-import * as ReduxThunk from 'redux-thunk';
+import { spawn } from 'redux-saga/effects';
+import * as App from './app';
 import * as Chains from './chains';
-import { Action as ChainsAction } from './chains/action';
 import * as DraftPage from './draftPage';
-import { Action as DraftPageAction } from './draftPage/action';
+import * as Explorers from './explorers';
+import * as LoginPage from './loginPage';
+import * as Projects from './projects';
 import * as RpcServers from './rpcServers';
-import { Action as RpcServersAction } from './rpcServers/action';
 import * as Scatter from './scatter';
-import { Action as ScatterAction } from './scatter/action';
 import * as StartPage from './startPage';
-import { Action as StartPageAction } from './startPage/action';
 
 export const reducer = combineReducers({
-    scatter: Scatter.reducer,
-    startPage: StartPage.reducer,
     chains: Chains.reducer,
     draftPage: DraftPage.reducer,
+    explorers: Explorers.reducer,
+    loginPage: LoginPage.reducer,
+    projects: Projects.reducer,
     rpcServers: RpcServers.reducer,
+    scatter: Scatter.reducer,
+    startPage: StartPage.reducer,
 });
 
 export type State = ReturnType<typeof reducer>;
 
-export type BasicAction =
-    | ChainsAction
-    | DraftPageAction
-    | RpcServersAction
-    | ScatterAction
-    | StartPageAction;
+export type Action =
+    | App.Action
+    | Chains.Action
+    | DraftPage.Action
+    | Explorers.Action
+    | LoginPage.Action
+    | Projects.Action
+    | RpcServers.Action
+    | Scatter.Action
+    | StartPage.Action;
 
-export interface ThunkAction<R, A extends Action> extends Action {
-    <E>(
-        dispatch: ReduxThunk.ThunkDispatch<State, E, A>,
-        getState: () => State,
-        extraArgument: E,
-    ): R;
+export function* saga() {
+    yield spawn(App.saga);
+    yield spawn(Chains.saga);
+    yield spawn(DraftPage.saga);
+    yield spawn(Projects.saga);
+    yield spawn(RpcServers.saga);
+    yield spawn(Scatter.saga);
+    yield spawn(StartPage.saga);
 }
-
-export type Action = BasicAction | ThunkAction<any, BasicAction>;

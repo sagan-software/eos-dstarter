@@ -1,8 +1,7 @@
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/styles';
 import classNames from 'classnames';
 import React from 'react';
-import * as Styles from '../styles';
+import { makeStyles } from '../styles';
 
 export type Props<E> = React.DetailedHTMLProps<React.HTMLAttributes<E>, E>;
 

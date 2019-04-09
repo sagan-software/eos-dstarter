@@ -1,34 +1,27 @@
 import { applyMiddleware, createStore, Store } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { create } from 'redux-react-hook';
-import thunkMiddleware from 'redux-thunk';
+import createSagaMiddleware from 'redux-saga';
 import * as App from './app';
 import * as Chains from './chains';
 import * as DraftPage from './draftPage';
+import * as Explorers from './explorers';
+import * as LoginPage from './loginPage';
 import * as Projects from './projects';
 import * as Root from './root';
 import * as RpcServers from './rpcServers';
 import * as Scatter from './scatter';
 import * as StartPage from './startPage';
 
-export {
-    App,
-    Chains,
-    DraftPage,
-    Projects,
-    Root,
-    RpcServers,
-    Scatter,
-    StartPage,
-};
-
 export function makeStore(): Store<Root.State, Root.Action> {
-    const middlewares = [thunkMiddleware];
-    const middleWareEnhancer = applyMiddleware(...middlewares);
-    return createStore(
+    const sagaMiddleware = createSagaMiddleware();
+    const enhancer = applyMiddleware(sagaMiddleware);
+    const store = createStore<Root.State, Root.Action, {}, {}>(
         Root.reducer,
-        composeWithDevTools({ name: 'weos.fund' })(middleWareEnhancer),
+        composeWithDevTools({ name: 'weos.fund' })(enhancer),
     );
+    sagaMiddleware.run(Root.saga);
+    return store;
 }
 
 export const { StoreContext, useDispatch, useMappedState } = create<
@@ -36,3 +29,31 @@ export const { StoreContext, useDispatch, useMappedState } = create<
     Root.Action,
     Store<Root.State, Root.Action>
 >();
+
+export {
+    App,
+    Chains,
+    DraftPage,
+    Explorers,
+    LoginPage,
+    Root,
+    RpcServers,
+    Scatter,
+    StartPage,
+    Projects,
+};
+export default {
+    App,
+    Chains,
+    DraftPage,
+    Explorers,
+    LoginPage,
+    Root,
+    RpcServers,
+    Scatter,
+    StartPage,
+    Projects,
+    useDispatch,
+    useMappedState,
+    StoreContext,
+};

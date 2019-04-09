@@ -1,15 +1,18 @@
+import { Menu, MenuItem } from '@material-ui/core';
+import Avatar from '@material-ui/core/Avatar';
 import MuiButton, {
     ButtonProps as MuiButtonProps,
 } from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import MuiLink, { LinkProps as MuiLinkProps } from '@material-ui/core/Link';
 import MuiTypography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/styles';
 import classNames from 'classnames';
-import React from 'react';
+import React, { useCallback } from 'react';
 import * as Router from 'react-router-dom';
 import * as Route from '../route';
 import * as Store from '../store';
+import { makeStyles } from '../styles';
+import Identicon from './Identicon';
 
 export type Props<E> = React.DetailedHTMLProps<React.HTMLAttributes<E>, E>;
 
@@ -42,9 +45,9 @@ const useHeaderStyles = makeStyles((theme) => ({
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        padding: theme.spacing.unit * 2,
-        paddingLeft: theme.spacing.unit * 4,
-        paddingRight: theme.spacing.unit * 4,
+        padding: theme.spacing(2),
+        paddingLeft: theme.spacing(4),
+        paddingRight: theme.spacing(4),
         borderBottomStyle: 'solid',
         borderBottomWidth: 1,
         borderBottomColor: theme.palette.grey[300],
@@ -83,11 +86,13 @@ export interface ButtonProps extends MuiButtonProps {
     readonly to: Route.Route;
 }
 
-export function Button(props: ButtonProps) {
-    const to = Route.getRouteString(props.to);
-    const Inner = (innerProps: any) => <Router.Link {...innerProps} to={to} />;
+export function Button({ to, ...props }: ButtonProps) {
+    const toStr = Route.getRouteString(to);
+    const Inner = React.forwardRef((innerProps: any, ref) => (
+        <Router.Link {...innerProps} to={toStr} innerRef={ref} />
+    ));
     return (
-        <MuiButton component={Inner} {...props}>
+        <MuiButton {...props} component={Inner}>
             {props.children}
         </MuiButton>
     );
@@ -122,7 +127,7 @@ export function Logo(props: Props<HTMLElement>) {
     const classes = useLogoStyles();
     return (
         <Link
-            className={classes.logo}
+            className={classNames(classes.logo, props.className)}
             to={Route.home()}
             color='primary'
             underline='none'
@@ -132,9 +137,23 @@ export function Logo(props: Props<HTMLElement>) {
     );
 }
 
+const useSiteNavStyles = makeStyles((theme) => ({
+    siteNav: {
+        flex: 1,
+        display: 'flex',
+        '& > *': {
+            marginRight: theme.spacing(4),
+        },
+    },
+}));
+
 export function SiteNav(props: Props<HTMLElement>) {
+    const classes = useSiteNavStyles();
     return (
-        <nav {...props}>
+        <nav
+            {...props}
+            className={classNames(classes.siteNav, props.className)}
+        >
             <Link to={Route.explore()} variant='body1'>
                 Explore
             </Link>
@@ -151,35 +170,32 @@ const useUserNavStyles = makeStyles((theme) => ({
         display: 'flex',
         justifyContent: 'flex-end',
         '& > *': {
-            marginLeft: theme.spacing.unit * 4,
+            marginLeft: theme.spacing(4),
         },
     },
 }));
 
 export function UserNav() {
-    return <></>;
-    // Store.connect((state) => ({ scatter: state.scatter }), {
-    //     logout: Store.Scatter.logout,
-    // })(
-    //     Styles.withStyles()(({ scatter, classes, logout }: UserNavProps) => {
-    //         const identity =
-    //             scatter.status === Store.Scatter.Status.Connected &&
-    //             scatter.identity.status === Store.Scatter.IdentityStatus.LoggedIn
-    //                 ? scatter.identity
-    //                 : null;
-    //         return (
-    //             <nav className={classes.userNav}>
-    //                 <Link to={Route.settings()} variant='body1'>
-    //                     Settings
-    //                 </Link>
-    //                 {identity ? loggedIn(identity, logout) : loggedOut()}
-    //             </nav>
-    //         );
-    //     }),
-    // );
+    const classes = useUserNavStyles();
+    const identity = Store.useMappedState(
+        useCallback(Store.Scatter.getIdentity, []),
+    );
+    return (
+        <nav className={classes.userNav}>
+            <Link to={Route.settings()} variant='body1'>
+                Settings
+            </Link>
+            {identity &&
+            identity.status === Store.Scatter.IdentityStatus.LoggedIn ? (
+                <LoggedIn identity={identity} />
+            ) : (
+                <LoggedOut />
+            )}
+        </nav>
+    );
 }
 
-function loggedOut() {
+function LoggedOut() {
     return (
         <Link to={Route.login()} variant='body1'>
             Login
@@ -187,18 +203,49 @@ function loggedOut() {
     );
 }
 
-function loggedIn(identity: Store.Scatter.LoggedIn, logout: any) {
+interface LoggedInProps {
+    readonly identity: Store.Scatter.LoggedIn;
+}
+
+function LoggedIn({ identity }: LoggedInProps) {
+    const dispatch = Store.useDispatch();
+    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+
+    function handleClick(event: React.MouseEvent<HTMLButtonElement>) {
+        setAnchorEl(event.currentTarget);
+    }
+
+    function handleClose() {
+        setAnchorEl(null);
+    }
+    const onClick = useCallback((e) => {
+        e.preventDefault();
+        dispatch<Store.Scatter.Logout>({
+            type: Store.Scatter.Type.Logout,
+        });
+    }, []);
+    const identiconHash = identity.accounts.map((acc) => acc.name).join('');
     return (
-        <MuiLink
-            href='#logout'
-            variant='body1'
-            onClick={(e: any) => {
-                e.preventDefault();
-                logout();
-            }}
-        >
-            Logout
-        </MuiLink>
+        <>
+            <MuiButton onClick={handleClick}>
+                <Avatar>
+                    <Identicon hash={identiconHash} />
+                    {/* <MuiLink href='#logout' variant='body1' onClick={onClick}>
+                    Logout
+                </MuiLink> */}
+                </Avatar>
+            </MuiButton>
+            <Menu
+                id='simple-menu'
+                anchorEl={anchorEl}
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+            >
+                <MenuItem onClick={handleClose}>Profile</MenuItem>
+                <MenuItem onClick={handleClose}>My account</MenuItem>
+                <MenuItem onClick={onClick}>Logout</MenuItem>
+            </Menu>
+        </>
     );
 }
 
@@ -244,7 +291,7 @@ const useTopCategoriesStyles = makeStyles((theme) => ({
         borderBottomWidth: 1,
         borderBottomColor: theme.palette.grey[300],
         '& > *': {
-            margin: theme.spacing.unit * 2,
+            margin: theme.spacing(2),
         },
     },
 }));

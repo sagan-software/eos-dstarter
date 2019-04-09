@@ -1,16 +1,16 @@
 import Scatter from 'scatterjs-core';
 
-export type State = NotAsked | Connecting | Connected | Unavailable;
+export type State = Default | Connecting | Connected | Unavailable;
 
 export enum Status {
-    NotAsked,
+    Default,
     Connecting,
     Connected,
     Unavailable,
 }
 
-export interface NotAsked {
-    readonly status: Status.NotAsked;
+export interface Default {
+    readonly status: Status.Default;
 }
 
 export interface Connecting {
@@ -67,5 +67,5 @@ export interface Unavailable {
 }
 
 export const initialState: State = {
-    status: Status.NotAsked,
+    status: Status.Default,
 };

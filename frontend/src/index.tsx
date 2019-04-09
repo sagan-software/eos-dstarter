@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
-import Root from './containers/Root';
+import Root from './components/Root';
 import * as serviceWorker from './serviceWorker';
 
 render(<Root />, document.getElementById('root'));

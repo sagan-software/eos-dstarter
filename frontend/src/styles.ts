@@ -1,12 +1,16 @@
 import teal from '@material-ui/core/colors/teal';
-import * as MuiStyles from '@material-ui/core/styles';
+import { createMuiTheme, Theme } from '@material-ui/core/styles';
+import {
+    default as makeMuiStyles,
+    StylesHook,
+} from '@material-ui/styles/makeStyles';
+import {
+    Styles,
+    ThemeOfStyles,
+    WithStylesOptions,
+} from '@material-ui/styles/withStyles';
 
-export type Styles = MuiStyles.StyleRules<string>;
-export type Props = MuiStyles.WithStyles<Styles>;
-export type Theme = MuiStyles.Theme;
-export type MapThemeToStyles = (theme: Theme) => Styles;
-
-export const theme: Theme = MuiStyles.createMuiTheme({
+export const theme = createMuiTheme({
     palette: {
         background: {
             default: '#ffffff',
@@ -14,8 +18,11 @@ export const theme: Theme = MuiStyles.createMuiTheme({
         primary: { main: teal[900] },
         secondary: { main: '#11cb5f' },
     },
-    typography: { useNextVariants: true },
 });
 
-export const withStyles = (mapThemeToStyles: MapThemeToStyles) =>
-    MuiStyles.withStyles(mapThemeToStyles, { withTheme: true });
+export function makeStyles<S extends Styles<Theme, any>>(
+    styles: S,
+    options?: WithStylesOptions<ThemeOfStyles<S>>,
+): StylesHook<S> {
+    return makeMuiStyles(styles, options);
+}

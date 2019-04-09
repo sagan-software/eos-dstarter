@@ -109,10 +109,6 @@ function onLogout(state: State.State, action: Action.Logout): State.State {
     if (state.status === State.Status.Connected) {
         return {
             ...state,
-            identity: {
-                status: State.IdentityStatus.LoggingOut,
-                ...action.identity,
-            },
         };
     } else {
         return state;

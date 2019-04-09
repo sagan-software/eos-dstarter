@@ -6,7 +6,18 @@ export interface State {
     };
 }
 
-export interface Project {
+export const initialState: State = {};
+
+export type Project = ProjectOk | ProjectErr;
+
+export enum Status {
+    Loading,
+    Ok,
+    Err,
+}
+
+export interface ProjectOk {
+    readonly status: Status.Ok;
     readonly projectName: string; // eosio name
     readonly creator: string; // eosio name
     readonly title: string;
@@ -25,6 +36,19 @@ export interface Project {
     readonly durationDays: number;
     readonly pledgedTotal: number;
     readonly pledgedClaimed: number;
+}
+
+export enum ErrorCode {
+    NoChainOk,
+    NoRpcServerOk,
+    NotFound,
+    Unknown,
+}
+
+export interface ProjectErr {
+    readonly status: Status.Err;
+    readonly code: ErrorCode;
+    readonly message: string;
 }
 
 export enum ProjectGoalType {
@@ -54,6 +78,15 @@ export interface ProjectReward {
 export interface ProjectRewardItem {
     readonly name: string;
     readonly quantity: number;
+}
+
+export function randomName(): string {
+    let text = '';
+    const possible = 'abcdefghijklmnopqrstuvwxyz12345';
+    for (let i = 0; i < 12; i++) {
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+    }
+    return text;
 }
 
 export enum Category {

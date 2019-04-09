@@ -13,8 +13,6 @@ export function reducer(state = State.initialState, action: Action.Action) {
         return onSetDescription(state, action);
     case Action.Type.SetChainId:
         return onSetChainId(state, action);
-    case Action.Type.Submit:
-        return onSubmit(state, action);
     case Action.Type.SubmitOk:
         return onSubmitOk(state, action);
     case Action.Type.SubmitErr:
@@ -68,20 +66,20 @@ function onSetChainId(
     };
 }
 
-function onSubmit(state: State.State, action: Action.Submit): State.State {
-    return {
-        ...state,
-        submit: {
-            status: State.Status.Submitting,
-        },
-    };
-}
+// function onSubmit(state: State.State, action: Action.Submit): State.State {
+//     return {
+//         ...state,
+//         submit: {
+//             status: State.SubmitStatus.Submitting,
+//         },
+//     };
+// }
 
 function onSubmitOk(state: State.State, action: Action.SubmitOk): State.State {
     return {
         ...state,
         submit: {
-            status: State.Status.SubmitOk,
+            status: State.SubmitStatus.Ok,
             chain: action.chain,
             account: action.account,
             draftName: action.draftName,
@@ -97,7 +95,7 @@ function onSubmitErr(
     return {
         ...state,
         submit: {
-            status: State.Status.SubmitErr,
+            status: State.SubmitStatus.Err,
         },
     };
 }

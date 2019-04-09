@@ -1,5 +1,3 @@
-import * as Eos from 'eosjs';
-
 export interface State {
     [url: string]: Server;
 }
@@ -12,7 +10,7 @@ export enum Protocol {
 }
 
 export enum Status {
-    NotAsked,
+    Default,
     Checking,
     Ok,
     Err,
@@ -25,29 +23,24 @@ export interface ServerBase {
 }
 
 export interface ServerUnknown extends ServerBase {
-    readonly status: Status.NotAsked;
+    readonly status: Status.Default;
 }
 
 export interface ServerChecking extends ServerBase {
     readonly status: Status.Checking;
-    readonly requestStart: Date;
     readonly ping?: number;
-    readonly requestEnd?: Date;
     readonly chainId?: string;
-    readonly rpc?: Eos.JsonRpc;
 }
 
 export interface ServerOk extends ServerBase {
     readonly status: Status.Ok;
     readonly ping: number;
-    readonly requestEnd: Date;
     readonly chainId: string;
-    readonly rpc: Eos.JsonRpc;
 }
 
 export interface ServerErr extends ServerBase {
     readonly status: Status.Err;
-    readonly error: any;
+    readonly message: string;
 }
 
 export function serverToUrl({
@@ -62,7 +55,7 @@ export function serverFromUrl(url: string): ServerUnknown {
     const { protocol, hostname, port } = new URL(url);
     const isHttps = protocol.startsWith('https');
     return {
-        status: Status.NotAsked,
+        status: Status.Default,
         protocol: isHttps ? Protocol.Https : Protocol.Http,
         host: hostname,
         port: port ? parseInt(port, 10) : isHttps ? 443 : 80,
@@ -78,6 +71,8 @@ export const initialState: State = [
     'https://jungle2.cryptolions.io',
     'https://telos.caleos.io',
 ].reduce((acc: State, url) => {
-    acc[url] = serverFromUrl(url);
+    const server = serverFromUrl(url);
+    const newUrl = serverToUrl(server);
+    acc[newUrl] = server;
     return acc;
 }, {});

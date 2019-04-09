@@ -10,10 +10,8 @@ export function reducer(
         return onUpsert(state, action);
     case Action.Type.Remove:
         return onRemove(state, action);
-    case Action.Type.SetUnknown:
-        return onSetUnknown(state, action);
-    case Action.Type.SetChecking:
-        return onSetChecking(state, action);
+    case Action.Type.Check:
+        return onCheck(state, action);
     case Action.Type.SetOk:
         return onSetOk(state, action);
     case Action.Type.SetErr:
@@ -27,7 +25,7 @@ function onUpsert(state: State.State, action: Action.Upsert): State.State {
     return {
         ...state,
         [action.chainId]: {
-            status: State.Status.Unknown,
+            status: State.Status.Default,
             env: action.env,
             chainId: action.chainId,
             displayName: action.displayName,
@@ -46,33 +44,8 @@ function onRemove(state: State.State, action: Action.Remove): State.State {
     }
 }
 
-function onSetUnknown(
-    state: State.State,
-    { chainId }: Action.SetUnknown,
-): State.State {
-    if (chainId in state) {
-        const oldChain = state[chainId];
-        const newChain: State.ChainUnknown = {
-            status: State.Status.Unknown,
-            env: oldChain.env,
-            chainId,
-            displayName: oldChain.displayName,
-            contractName: oldChain.contractName,
-            priority: oldChain.priority,
-        };
-        return {
-            ...state,
-            [chainId]: newChain,
-        };
-    } else {
-        return state;
-    }
-}
-
-function onSetChecking(
-    state: State.State,
-    { chainId }: Action.SetChecking,
-): State.State {
+function onCheck(state: State.State, { server }: Action.Check): State.State {
+    const chainId = server.chainId;
     if (chainId in state) {
         const oldChain = state[chainId];
         const newChain: State.ChainChecking = {
