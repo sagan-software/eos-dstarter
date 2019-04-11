@@ -6,7 +6,8 @@ export type Route =
     | About
     | Project
     | Draft
-    | Settings;
+    | Settings
+    | MyProjects;
 
 export enum Type {
     Home,
@@ -17,6 +18,7 @@ export enum Type {
     Project,
     Draft,
     Settings,
+    MyProjects,
 }
 
 export interface Home {
@@ -95,6 +97,14 @@ export function draft(
     return { type: Type.Draft, chainIdPrefix, accountName, draftName };
 }
 
+export interface MyProjects {
+    readonly type: Type.MyProjects;
+}
+
+export function myProjects(): MyProjects {
+    return { type: Type.MyProjects };
+}
+
 export function getRouteTemplate(type: Type): string {
     switch (type) {
     case Type.Home:
@@ -113,6 +123,8 @@ export function getRouteTemplate(type: Type): string {
         return '/projects/:chainIdPrefix/:accountName/:projectName';
     case Type.Draft:
         return '/projects/:chainIdPrefix/:accountName/:draftName/edit';
+    case Type.MyProjects:
+        return '/me';
     }
 }
 
@@ -138,6 +150,8 @@ export function getRouteString(route: Route): string {
         return `/projects/${normalizeChainIdPrefix(route.chainIdPrefix)}/${
                 route.accountName
             }/${route.draftName}/edit`;
+    case Type.MyProjects:
+        return '/me';
     }
 }
 

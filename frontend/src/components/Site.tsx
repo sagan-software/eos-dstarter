@@ -12,7 +12,6 @@ import * as Router from 'react-router-dom';
 import * as Route from '../route';
 import * as Store from '../store';
 import { makeStyles } from '../styles';
-import Identicon from './Identicon';
 
 export type Props<E> = React.DetailedHTMLProps<React.HTMLAttributes<E>, E>;
 
@@ -209,42 +208,20 @@ interface LoggedInProps {
 
 function LoggedIn({ identity }: LoggedInProps) {
     const dispatch = Store.useDispatch();
-    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-
-    function handleClick(event: React.MouseEvent<HTMLButtonElement>) {
-        setAnchorEl(event.currentTarget);
-    }
-
-    function handleClose() {
-        setAnchorEl(null);
-    }
     const onClick = useCallback((e) => {
         e.preventDefault();
         dispatch<Store.Scatter.Logout>({
             type: Store.Scatter.Type.Logout,
         });
     }, []);
-    const identiconHash = identity.accounts.map((acc) => acc.name).join('');
     return (
         <>
-            <MuiButton onClick={handleClick}>
-                <Avatar>
-                    <Identicon hash={identiconHash} />
-                    {/* <MuiLink href='#logout' variant='body1' onClick={onClick}>
-                    Logout
-                </MuiLink> */}
-                </Avatar>
-            </MuiButton>
-            <Menu
-                id='simple-menu'
-                anchorEl={anchorEl}
-                open={Boolean(anchorEl)}
-                onClose={handleClose}
-            >
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
-                <MenuItem onClick={handleClose}>My account</MenuItem>
-                <MenuItem onClick={onClick}>Logout</MenuItem>
-            </Menu>
+            <Link to={Route.myProjects()} variant='body1'>
+                My Projects
+            </Link>
+            <Link to={Route.settings()} variant='body1' onClick={onClick}>
+                Logout
+            </Link>
         </>
     );
 }
@@ -266,17 +243,10 @@ export function Footer(props: Props<HTMLElement>) {
         >
             <TopCategories />
             <div>
-                <section>
-                    <MuiTypography variant='h6'>About</MuiTypography>
-                    <ul>
-                        <li>
-                            <MuiLink href='/about' variant='body1'>
-                                About us
-                            </MuiLink>
-                        </li>
-                        <li>About us</li>
-                    </ul>
-                </section>
+                <p>
+                    IPFS Hash{' '}
+                    <code>QmYaXiNQT8qhsw2nN86yhRgSUaA8uit8DXaQFZuEcweuTz</code>
+                </p>
             </div>
         </footer>
     );

@@ -3,7 +3,9 @@ import {
     call,
     cancel,
     put,
+    race,
     select,
+    take,
     takeEvery,
     takeLatest,
 } from 'redux-saga/effects';
@@ -73,4 +75,41 @@ function* onSetOk(action: Action.SetOk) {
             server: action,
         });
     }
+}
+
+export function* waitForServers(servers: ReadonlyArray<State.Server>) {
+    const pending = servers.filter(
+        (s) =>
+            s.status === State.Status.Default ||
+            s.status === State.Status.Checking,
+    );
+    const ids = pending.map(State.serverToUrl);
+    let count = pending.length;
+
+    while (true) {
+        if (count === 0) {
+            return;
+        }
+
+        const [ok, err]: [
+            Action.SetOk | void,
+            Action.SetErr | void
+        ] = yield race([take(Action.Type.SetOk), take(Action.Type.SetErr)]);
+        if (ok) {
+            const url = State.serverToUrl(ok);
+            if (ids.includes(url)) {
+                count--;
+            }
+        } else if (err) {
+            const url = State.serverToUrl(err);
+            if (ids.includes(url)) {
+                count--;
+            }
+        }
+    }
+}
+
+export function* waitForAll() {
+    const chains: ReturnType<typeof getAll> = yield select(getAll);
+    yield* waitForServers(chains);
 }

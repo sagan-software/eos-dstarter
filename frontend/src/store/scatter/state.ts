@@ -1,5 +1,8 @@
 import Scatter from 'scatterjs-core';
 
+export type FullNetwork = Scatter.FullNetwork;
+export type PartialNetwork = Scatter.PartialNetwork;
+
 export type State = Default | Connecting | Connected | Unavailable;
 
 export enum Status {

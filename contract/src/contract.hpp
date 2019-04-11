@@ -10,19 +10,16 @@
 namespace dapp
 {
 using namespace std;
-using namespace eosio;
 
 class[[eosio::contract("contract")]] system : public eosio::contract
 {
-  private:
-    profiles_table _profiles;
+private:
     projects_table _projects;
 
-  public:
+public:
     using contract::contract;
 
     system(name receiver, name code, datastream<const char *> ds) : contract(receiver, code, ds),
-                                                                    _profiles(receiver, receiver.value),
                                                                     _projects(receiver, receiver.value){};
 
     [[eosio::action]] void claimpledges(
@@ -36,16 +33,6 @@ class[[eosio::contract("contract")]] system : public eosio::contract
         const name account,
         const name draft_name,
         const uint8_t reward_index);
-
-    [[eosio::action]] void delprofile(
-        const name account);
-
-    [[eosio::action]] void editprofile(
-        const name account,
-        const string display_name,
-        const string avatar_hash,
-        const string biography,
-        const vector<string> &websites);
 
     [[eosio::action]] void killproject(
         const name project_name);
@@ -61,7 +48,7 @@ class[[eosio::contract("contract")]] system : public eosio::contract
         const name draft_name,
         const name live_name);
 
-    [[eosio::action]] void savebasics(
+    [[eosio::action]] void savedraft(
         const name account,
         const name draft_name,
         const string &title,
@@ -73,11 +60,7 @@ class[[eosio::contract("contract")]] system : public eosio::contract
         const time_point_sec start_time,
         const time_point_sec end_time,
         const uint8_t duration_days,
-        const vector<string> &tags);
-
-    [[eosio::action]] void savecontent(
-        const name account,
-        const name draft_name,
+        const vector<string> &tags,
         const string image_hash,
         const string video_hash,
         const string story_hash);

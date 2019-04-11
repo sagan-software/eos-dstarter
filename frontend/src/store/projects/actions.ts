@@ -11,23 +11,25 @@ export type Action = Load | LoadOk | LoadErr;
 export interface Load {
     readonly type: Type.Load;
     readonly chainId: string;
-    readonly accountName: string;
-    readonly projectName: string;
+    readonly table?: string;
+    readonly scope: string;
+    readonly limit?: number;
+    readonly lowerBound?: string;
+    readonly upperBound?: string;
 }
 
 export interface LoadOk {
     readonly type: Type.LoadOk;
     readonly chainId: string;
     readonly accountName: string;
-    readonly projectName: string;
-    readonly project: State.Project;
+    readonly projects: ReadonlyArray<State.ProjectOk>;
+    readonly hasMore: boolean;
 }
 
 export interface LoadErr {
     readonly type: Type.LoadErr;
     readonly chainId: string;
     readonly accountName: string;
-    readonly projectName: string;
     readonly code: State.ErrorCode;
-    readonly message?: any;
+    readonly message?: string;
 }

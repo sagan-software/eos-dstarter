@@ -49,9 +49,11 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export interface Props {
-    readonly children?: any;
-}
+export interface Props
+    extends React.DetailedHTMLProps<
+        React.HTMLAttributes<HTMLElement>,
+        HTMLElement
+    > {}
 
 export function Title(props: Props) {
     const classes = useStyles();

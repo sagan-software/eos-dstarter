@@ -16,8 +16,9 @@ function* onLoad({ chainIdPrefix, accountName, draftName }: Action.Load) {
         yield put<Projects.Load>({
             type: Projects.Type.Load,
             chainId: chain.chainId,
-            accountName,
-            projectName: draftName,
+            scope: accountName,
+            upperBound: draftName,
+            lowerBound: draftName,
         });
     } else {
         // TODO

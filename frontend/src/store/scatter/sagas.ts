@@ -3,7 +3,6 @@ import {
     call,
     cancel,
     put,
-    putResolve,
     race,
     select,
     take,
@@ -81,9 +80,9 @@ function* onLogout(action: Action.Logout) {
     }
 }
 
-export function* transact(
+export function* transact<T>(
     rpcServer: RpcServers.ServerOk,
-    toActions: (account: Scatter.Account) => ReadonlyArray<any>,
+    toActions: (account: Scatter.Account) => ReadonlyArray<T>,
 ) {
     const connected: ReturnType<typeof isConnected> = yield select(isConnected);
     if (!connected) {

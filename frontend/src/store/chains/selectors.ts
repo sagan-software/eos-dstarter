@@ -28,6 +28,16 @@ export const getAllNotOk = (
         [],
     );
 
+export const getAllDefault = (
+    state: Root.State,
+): ReadonlyArray<State.ChainDefault> =>
+    getAll(state).reduce((acc: State.ChainDefault[], chain) => {
+        if (chain.status === State.Status.Default) {
+            acc.push(chain);
+        }
+        return acc;
+    }, []);
+
 export const getById = (chainId: string) => (
     state: Root.State,
 ): State.Chain | void => state.chains[chainId];

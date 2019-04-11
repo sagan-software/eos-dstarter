@@ -1,6 +1,6 @@
 export interface State {
     [chainId: string]: {
-        [accountName: string]: {
+        [scopeName: string]: {
             [projectName: string]: Project;
         };
     };
@@ -16,9 +16,35 @@ export enum Status {
     Err,
 }
 
-export interface ProjectOk {
+export interface ProjectRaw {
+    readonly project_name: string;
+    readonly creator: string; // eosio name
+    readonly title: string;
+    readonly subtitle: string;
+    readonly goal_amount: string; // asset
+    readonly goal_type: ProjectGoalType;
+    readonly stage: ProjectStage;
+    readonly category: Category;
+    readonly tags: ReadonlyArray<string>;
+    readonly image_hash: string; // ipfs hash
+    readonly video_hash: string; // ipfs hash
+    readonly story_hash: string; // ipfs hash
+    readonly rewards: ReadonlyArray<ProjectReward>;
+    readonly start_time: string;
+    readonly end_time: string;
+    readonly duration_days: number;
+    readonly pledged_total: number;
+    readonly pledged_claimed: number;
+}
+
+export interface ProjectRef {
+    readonly chainId: string;
+    readonly scopeName: string;
+    readonly projectName: string;
+}
+
+export interface ProjectOk extends ProjectRef {
     readonly status: Status.Ok;
-    readonly projectName: string; // eosio name
     readonly creator: string; // eosio name
     readonly title: string;
     readonly subtitle: string;
@@ -36,6 +62,32 @@ export interface ProjectOk {
     readonly durationDays: number;
     readonly pledgedTotal: number;
     readonly pledgedClaimed: number;
+}
+
+export function rawToOk(raw: ProjectRaw): ProjectOk {
+    return {
+        chainId: '',
+        scopeName: '',
+        projectName: raw.project_name,
+        status: Status.Ok,
+        creator: raw.creator,
+        title: raw.title,
+        subtitle: raw.subtitle,
+        goalAmount: raw.goal_amount,
+        goalType: raw.goal_type,
+        stage: raw.stage,
+        category: raw.category,
+        tags: raw.tags,
+        imageHash: raw.image_hash,
+        videoHash: raw.video_hash,
+        storyHash: raw.story_hash,
+        rewards: raw.rewards,
+        startTime: new Date(raw.start_time),
+        endTime: new Date(raw.end_time),
+        durationDays: raw.duration_days,
+        pledgedTotal: raw.pledged_total,
+        pledgedClaimed: raw.pledged_claimed,
+    };
 }
 
 export enum ErrorCode {

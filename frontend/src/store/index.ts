@@ -7,6 +7,7 @@ import * as Chains from './chains';
 import * as DraftPage from './draftPage';
 import * as Explorers from './explorers';
 import * as LoginPage from './loginPage';
+import * as MyProjectsPage from './myProjectsPage';
 import * as Projects from './projects';
 import * as Root from './root';
 import * as RpcServers from './rpcServers';
@@ -36,6 +37,7 @@ export {
     DraftPage,
     Explorers,
     LoginPage,
+    MyProjectsPage,
     Root,
     RpcServers,
     Scatter,
@@ -48,6 +50,7 @@ export default {
     DraftPage,
     Explorers,
     LoginPage,
+    MyProjectsPage,
     Root,
     RpcServers,
     Scatter,

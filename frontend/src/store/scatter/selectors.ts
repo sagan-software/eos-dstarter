@@ -8,12 +8,12 @@ export const getStatus = (state: Root.State) => state.scatter.status;
 export const isConnected = (state: Root.State) =>
     getStatus(state) === State.Status.Connected;
 
-export const getIdentity = (state: Root.State) =>
+export const getIdentity = (state: Root.State): State.Identity =>
     state.scatter.status === State.Status.Connected
         ? state.scatter.identity
-        : null;
+        : { status: State.IdentityStatus.LoggedOut };
 
 export const isLoggedIn = (state: Root.State) => {
     const identity = getIdentity(state);
-    return identity && identity.status === State.IdentityStatus.LoggedIn;
+    return identity.status === State.IdentityStatus.LoggedIn;
 };

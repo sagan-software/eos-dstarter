@@ -12,6 +12,7 @@ const NotFoundPage = React.lazy(() => import('./NotFoundPage'));
 // const AboutPage = React.lazy(() => import('./AboutPage'));
 const SettingsPage = React.lazy(() => import('./SettingsPage'));
 const DraftPage = React.lazy(() => import('./DraftPage'));
+const MyProjectsPage = React.lazy(() => import('./MyProjectsPage'));
 
 function App() {
     const dispatch = Store.useDispatch();
@@ -42,6 +43,10 @@ function App() {
                     <Router.Route
                         path={Route.getRouteTemplate(Route.Type.Draft)}
                         component={DraftPage}
+                    />
+                    <Router.Route
+                        path={Route.getRouteTemplate(Route.Type.MyProjects)}
+                        component={MyProjectsPage}
                     />
                     {/* <Router.Route
                     path={Route.getRouteTemplate(Route.Type.About)}

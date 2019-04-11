@@ -13,7 +13,7 @@ import * as Site from './Site';
 
 export interface Props {
     readonly selected: ReadonlyArray<string> | string;
-    readonly onClick?: (chain: Store.Chains.Chain) => any;
+    readonly onClick?: (chain: Store.Chains.Chain) => void;
     readonly chains: ReadonlyArray<Store.Chains.Chain>;
 }
 

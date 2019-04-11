@@ -53,17 +53,19 @@ function Connected() {
         });
     }, []);
     const login = useCallback(() => {
+        const accounts = selected.reduce(
+            (acc: Store.Scatter.PartialNetwork[], cur) => {
+                acc.push({
+                    chainId: cur,
+                    blockchain: 'eos',
+                });
+                return acc;
+            },
+            [],
+        );
         dispatch<Store.Scatter.Login>({
             type: Store.Scatter.Type.Login,
-            options: {
-                accounts: selected.reduce((acc: any, cur) => {
-                    acc.push({
-                        chainId: cur,
-                        blockchain: 'eos',
-                    });
-                    return acc;
-                }, []),
-            },
+            options: { accounts },
         });
     }, [selected]);
     return (
