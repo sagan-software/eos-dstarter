@@ -6,7 +6,7 @@ function build_contract_outside_container() {
     printf "\\t=========== Building Docker container ===========\\n\\n"
     docker build \
         --memory 10G \
-        --tag eos-habit-app:latest \
+        --tag sagan-software/eos:latest \
         --file ./docker/eos.dockerfile \
         ./docker
     docker run \
@@ -19,7 +19,7 @@ function build_contract_outside_container() {
         --volume /$(PWD)/contract/build:/contract/build \
         --volume /$(PWD)/build.sh:/contract/build.sh:ro \
         --workdir //contract \
-        eos-habit-app:latest \
+        sagan-software/eos:latest \
         bash build.sh contract_inner
 }
 
