@@ -1,0 +1,233 @@
+
+
+-
+    var siteName = "meta.fund";
+    var projectName = "Company of Heroes Board Game";
+    var projectSummary =
+        `A board game port of one of the greatest WWII strategy games of all time.`;
+    var projectPoster = "44223f94f6952ada320cba955fa876bd_original.jpg";
+    var projectGoal = 100000;
+    //- var projectGoal = 100;
+    var projectGoalFmt = projectGoal.toLocaleString({
+        style: "currency",
+    });
+    var projectPledged = 724593;
+    //- var projectPledged = 120;
+    var projectPledgedFmt = projectPledged.toLocaleString({
+        style: "currency",
+    });
+    var projectCategory = "Tabletop Games";
+    var projectLocation = "Salt Lake City, UT";
+    var projectRewards = [
+        {
+            id: 1,
+            amount: 65,
+            name: "2 Player Core Set",
+            desc: "A 2 Player Version of the big Core Set. Includes US and German Factions. Includes a set of applicable stretch goals.",
+            estimated_delivery: "May 2020",
+            ships_to: "Anywhere in the world",
+            backers: 77,
+        },
+        {
+            id: 2,
+            amount: 99,
+            name: "The Core Set",
+            desc: "The 4 Nation Core Set plus all stretch rewards. Includes US, Soviet, British and German armies. Shipping charged after the campaign ends via a pledge manager.",
+            estimated_delivery: "May 2020",
+            ships_to: "Anywhere in the world",
+            backers: 449,
+        },
+        {
+            id: 3,
+            amount: 125,
+            name: "Company Bundle",
+            desc: `The 4 Nation Core Set plus the Terrain Pack featuring large 3D buildings, objective point flag poles, and interchangeable flags. Plus all applicable stretch rewards. Shipping charged after the campaign ends.`,
+            estimated_delivery: "May 2020",
+            ships_to: "Anywhere in the world",
+            backers: 584,
+        },
+        {
+            id: 4,
+            amount: 125,
+            name: "Cooperative Bundle",
+            desc: `The 4 nation Core Set plus the Solo / Cooperative Pack. Includes all relevant stretch goals. Shipping charged after the campaign through a pledge manager.`,
+            estimated_delivery: "May 2020",
+            ships_to: "Anywhere in the world",
+            backers: 156
+        },
+        {
+            id: 5,
+            amount: 141,
+            name: "Core Set + Oberkommando West Pack",
+            desc: `The 4 nation Core Set plus the Solo / Cooperative Pack. Includes all relevant stretch goals. Shipping charged after the campaign through a pledge manager.`,
+            includes: [
+                "Core Set",
+                "Oberkommando West Pack"
+            ],
+            estimated_delivery: "May 2020",
+            ships_to: "Anywhere in the world",
+            backers: 42,
+        },
+        {
+            id: 6,
+            amount: 150,
+            name: "Battalion Bundle",
+            desc: `The Four Nation Core Set + Terrain Pack + Solo / Cooperative Pack. Includes all relevant stretch goals. Shipping charged after the campaign through a pledge manager.`,
+            estimated_delivery: "May 2020",
+            ships_to: "Anywhere in the world",
+            backers: 532,
+        },
+        {
+            id: 7,
+            amount: 174,
+            name: "4 Player Core Set - Painted",
+            desc: "The Four Player Core Set with all vehicles and core stretch goals hand painted in a unique 3 tone camo pattern per faction.",
+            includes: [
+                "Painted Vehicles Core Set",
+            ],
+            estimated_delivery: "May 2020",
+            ships_to: "Anywhere in the world",
+            backers: 10,
+            limit: 10,
+        },
+        {
+            id: 8,
+            amount: 195,
+            name: "Collector's Bundle",
+            desc: "The Four Nation Core Set + The Terrain Pack + Solo / Cooperative Pack + Elite Commanders Collection! All Stretch Rewards. Shipping charged after the campaign through a pledge manager.",
+            includes: [
+                "Core Set",
+                "Terrain Pack",
+                "Solo / Cooperative Pack",
+                "Elite Commander's Collection"
+            ],
+            estimated_delivery: "May 2020",
+            ships_to: "Anywhere in the world",
+            backers: 702
+        },
+        {
+            id: 9,
+            amount: 235,
+            name: "OKW Collectors Bundle",
+            desc: "The Collectors Bundle plus the new Oberkommando West Pack. Includes all Stretch Goals.",
+            includes: [
+                "Core Set",
+                "Terrain Pack",
+                "Solo / Cooperative Pack",
+                "Elite Commander's Collection",
+                "Oberkommando West Pack",
+            ],
+            estimated_delivery: "May 2020",
+            ships_to: "Anywhere in the world",
+            backers: 1044,
+        },
+        {
+            id: 10,
+            amount: 295,
+            name: "The Big Army Bundle",
+            desc: "A 4 Player Core set + a 2 Player Core Set for larger group games. Terrain Pack, Solo/Cooperative Expansion, Elite Commander's Collection, Oberkommando West Pack. Includes all Stretch Goals.",
+            includes: [
+                "Core Set",
+                "2 Player Set",
+                "Terrain Pack",
+                "Solo / Cooperative Pack",
+                "Elite Commander's Collection",
+                "Oberkommando West Pack"
+            ],
+            estimated_delivery: "May 2020",
+            ships_to: "Anywhere in the world",
+            backers: 288,
+        },
+        {
+            id: 11,
+            amount: 350,
+            name: "8 Player Competitive Bundle",
+            desc: "An 8 Player Competitive Package including two Terrain Packs and two 4-Player Core Sets to maximize those large paneled maps! Includes one Elite Commander's Collection, Oberkommando West Pack and Stug Assault Pack. Note the Solo & Cooperative Expansion is not included, but can be added on individually for $26.",
+            includes: [
+                "2x Core Set",
+                "2x Terrain Pack",
+                "Elite Commander's Collection",
+                "Oberkommando West Pack",
+                "STUG Assault Pack"
+            ],
+            estimated_delivery: "May 2020",
+            ships_to: "Anywhere in the world",
+            backers: 56,
+        },
+        {
+            id: 12,
+            amount: 385,
+            name: "Painted OKW Collector's Bundle",
+            desc: "The Collectors Bundle plus the new Oberkommando West Pack. Includes all Stretch Goals.",
+            includes: [
+                "Terrain Pack",
+                "Solo / Cooperative Pack",
+                "Painted Vehicles Core Set",
+                "Painted Oberkommando West Pack",
+                "Painted Elite Commander's Collection",
+            ],
+            estimated_delivery: "May 2020",
+            ships_to: "Anywhere in the world",
+            backers: 99,
+        },
+        {
+            id: 13,
+            amount: 550,
+            name: "Metal Storm 1",
+            desc: "All 50 Vehicles of the Core Set and Core Set Stretch Goals, produced in solid zinc, weighing in at 4+ kg of solid metal, and delivered in a debossed, anodized, metal Company of Heroes's box which will hold all add on's and expansions including a 2 player set. Includes everything included in the OKW Collector's bundle.",
+            includes: [
+                "Elite Commander's Collection",
+                "Oberkommando West Pack",
+                "Terrain Pack",
+                "Solo / Cooperative Pack",
+                "Metal War Crate",
+                "Metal Deluxe Core Set",
+            ],
+            estimated_delivery: "May 2020",
+            ships_to: "Anywhere in the world",
+            backers: 54,
+            limit: 75,
+        }
+    ]
+    var creatorName = "Bad Crow Games";
+    var creatorCreated = 2;
+    var creatorBacked = 39;
+    var creatorBio = "Bad Crow Games combines innovative game mechanics with unique deluxe components to create projects like Mech Command RTS - a real time strategy board game. Building on what they have learned in game design and manufacturing they are now bringing the Company of Heroes Board Game to KickStarter.";
+    var creatorAvatar = "761db2195a9ed037f685040b8ffe0a95_original.jpg";
+
+doctype html
+
+html
+    head
+        meta(charset="utf-8")
+        title= `${projectName} | ${siteName}`
+        meta(name="description" content="")
+        meta(name="viewport" content="width=device-width, initial-scale=1")
+
+    body
+        #site-container
+            header#site-header.p.bg.b-b.l-flex.l-center-y.l-between
+                a#site-header-logo(href='/')= siteName
+
+                nav#site-header-nav
+                    label.btn(for='login-modal') Loginasdf
+                    include ../../node_modules/@mdi/svg/svg/settings.svg
+
+            main.project
+                block main
+
+            footer#site-footer.p
+
+                ul
+                    li Link A
+                    li Link B
+
+        div
+            block modals
+                input(type='radio' name='modal' id='no-modal' checked)
+
+                input.modal-trigger(type='radio' name='modal' id='login-modal')
+                .modal-content
+                    h2 Login
+
+                label.modal-bg(for='no-modal')

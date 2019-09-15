@@ -1,0 +1,117 @@
+extends skeleton.pug
+
+block main
+    nav
+        a(href='#basics') Basics
+        a(href='#rewards') Rewards
+        a(href='#story') Story
+        a(href='#people') People
+        a(href='#chain') Chain
+    main
+        #basics.tab
+
+            h1 Start with the basics
+            p Make it easy for people to learn about your project.
+            .field
+                label Title
+                p Write a clear, brief title that helps people quickly understand the gist of your project.
+                input(name='title')
+            .field
+                label Subtitle
+                input(name='subtitle')
+            .field
+                label Choose a category
+                p Choose the category that most closely aligns with your project.
+                p Think of where backers may look to find it. Reach a more specific community by also choosing a subcategory.
+                p You’ll be able to change the category and subcategory even after your project is live.
+                select(name='category')
+                    option(disabled selected) Select your category
+                    option Art
+                    option Comics
+                    option Crafts
+                    option Dance
+                    option Design
+                    option Fashion
+                    option Film &amp; Video
+                    option Food
+                    option Games
+                    option Journalism
+                    option Music
+                    option Photography
+                    option Publishing
+                    option Technology
+                    option Theater
+            .field
+                label Set your project location
+                p Enter the location that best describes where your project is based.
+                input(name='location')
+
+            .field
+                label Upload a project image
+                p Add an image that clearly represents your project.
+                p Choose one that looks good at different sizes. It will appear in different sizes in different places: on your project page, across the Kickstarter website and mobile apps, and (when shared) on social channels.
+                p You may want to avoid including banners, badges, and text because they may not be legible at smaller sizes.
+                p Your image should be at least 1024x576 pixels. It will be cropped to a 16:9 ratio.
+                input(name='poster' type='file')
+
+            .field
+                label Upload a project video (optional)
+                p Add a video that describes your project.
+                p Tell people what you’re raising funds to do, how you plan to make it happen, who you are, and why you care about this project.
+                p After you’ve uploaded your video, use our editor to add captions and subtitles so your project is more accessible to everyone.
+                input(name='video' type='file')
+
+            .field
+                label Set a funding goal
+                p Set an achievable goal that covers what you need to complete your project.
+                p Funding is all-or-nothing. If you don’t meet your goal, you won’t receive any money.
+                input(name='goal' type='number' min='0')
+
+            .field
+                label Campaign duration
+                label
+                    input(name='duration' type='radio' value='fixed')
+                    | Fixed number of days (1-60)
+                    .field
+                        label Enter number of days
+                        input(name='fixed-days' type='number' step=1 min=1 max=60)
+                label
+                    input(name='duration' type='radio' value='datetime')
+                    | End on a specific date &amp; time
+                    .field
+                        label Enter a date
+                        input(name='datetime' type='datetime-local')
+
+            footer
+                a.btn(href='#rewards') Next: Rewards
+
+        #rewards
+            h2 Add your rewards
+            p
+                | Offer simple, meaningful rewards that bring backers closer to
+                | your project. Rewards don't have to by physical items.
+                | Consider special experiences or behind-the-scenes peeks into
+                | your project.
+
+            footer
+                a.btn(href='#story') Next: Story
+
+        #story
+            h2 Introduce your project
+            p Tell people why the should be excited about your project. Get specific but be clear and be brief.
+
+            .field
+                label Project Description
+                p Describe what you're raising funds to do, why you care about it, how you plan to make it happen, and who you are. Your description should tell backers everything they need to know. If possible, include images to show them what your project is all about and what rewards look like.
+                textarea
+            .field
+                label Risks and challenges
+                p Be honest about the potential risks and challenges of this project and how you plan to overcome them to complete it.
+                textarea
+
+            footer
+                a.btn(href='#story') Next: People
+
+        #people
+
+        #chain

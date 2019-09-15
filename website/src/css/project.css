@@ -1,0 +1,264 @@
+.project__media {
+    width: 100%;
+}
+
+.project__poster {
+    width: 100%;
+}
+
+.project__title {
+    padding: var(--y) var(--x);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.project__title__name {
+    margin: 0 0 calc(var(--y) / 2);
+    padding: 0;
+    font-size: 24px;
+}
+
+.project__title__summary {
+    margin: 0;
+    font-size: 18px;
+}
+
+.project__creator {
+    --avatar-size: 42px;
+    padding: var(--y) var(--x);
+    display: grid;
+    grid-template-areas:
+        "avatar name"
+        "avatar info";
+    grid-template-columns: var(--avatar-size) 1fr;
+    column-gap: var(--x);
+    border-bottom: 1px solid var(--border-color);
+    align-items: center;
+}
+
+.project__creator__avatar {
+    grid-area: avatar;
+    border-radius: 50%;
+    height: var(--avatar-size);
+    width: var(--avatar-size);
+}
+
+.project__creator__name {
+    grid-area: name;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.project__creator__info {
+    grid-area: info;
+    font-size: 14px;
+}
+
+.project__stats {
+    padding: var(--y) var(--x);
+    display: grid;
+    grid-template-areas:
+        "progress progress progress"
+        "pledged backers time";
+    column-gap: var(--x);
+    row-gap: calc(var(--y) / 2);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.project__progress {
+    grid-area: progress;
+    height: 4px;
+    width: 100%;
+    display: block;
+    background-color: var(--border-color);
+    position: relative;
+}
+
+.project__progress span {
+    background-color: var(--brand);
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    z-index: 1;
+}
+
+.project__progress i {
+    background-color: #fff;
+    position: absolute;
+    top: 0;
+    width: 1px;
+    height: 100%;
+    z-index: 2;
+}
+
+.project__stat__value {
+    font-size: 16px;
+    color: #282828;
+}
+
+.project__stat__label {
+    font-size: 12px;
+    color: rgba(101, 105, 105);
+}
+
+.project__stat.--pledged {
+    grid-area: pledged;
+}
+
+.project__stat.--backers {
+    grid-area: backers;
+}
+
+.project__stat.--time {
+    grid-area: time;
+}
+
+.project__meta {
+    border-bottom: 1px solid var(--border-color);
+    padding: calc(var(--y) / 2) var(--x);
+    display: grid;
+    column-gap: var(--x);
+    grid-auto-columns: max-content;
+    grid-auto-flow: column;
+    justify-content: center;
+}
+
+.project__backers {
+    border-bottom: 1px solid var(--border-color);
+    padding: var(--y) var(--x);
+}
+
+.project__backers h2 {
+    margin: 0;
+}
+
+.project__nav {
+    position: sticky;
+    top: var(--header-height);
+    background-color: var(--bg-color);
+    display: grid;
+    column-gap: var(--x);
+    grid-auto-columns: max-content;
+    grid-auto-flow: column;
+    justify-content: space-between;
+    padding: 0 var(--x);
+    border-bottom: 1px solid var(--border-color);
+    height: var(--header-height);
+    align-items: center;
+    z-index: 10;
+}
+
+.project__pledges {
+    padding: var(--y) var(--x);
+}
+
+.project__pledge {
+    padding: var(--y) var(--x);
+    border: 1px solid var(--border-color);
+    margin-bottom: var(--y);
+    display: grid;
+    grid-template-areas:
+        "title title"
+        "name name"
+        "desc desc"
+        "delivery shipping"
+        "backers backers"
+        "form form";
+    grid-template-columns: 1fr 1fr;
+    position: relative;
+}
+
+.project__pledge h5 {
+    font-size: 10px;
+    text-transform: uppercase;
+    color: #656969;
+    margin-bottom: 0;
+}
+
+.project__pledge p {
+    font-size: 14px;
+    color: #020621;
+}
+
+.project__pledge__title {
+    grid-area: title;
+    font-size: 18px;
+    color: #282828;
+}
+
+.project__pledge__name {
+    grid-area: name;
+    font-size: 16px;
+    color: #282828;
+}
+
+.project__pledge__desc {
+    grid-area: desc;
+    color: #656969;
+    font-size: 14px;
+}
+
+.project__pledge__delivery {
+    grid-area: delivery;
+}
+
+.project__pledge__shipping {
+    grid-area: shipping;
+}
+
+.project__pledge__backers {
+    grid-area: backers;
+    font-size: 12px;
+    color: #656969;
+    margin-bottom: 0;
+}
+
+.project__pledge__backers__limit {
+    color: #ff5151;
+}
+
+.project__pledge__form__trigger {
+    display: none;
+}
+
+.project__pledge__form__toggle {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+.project__pledge__form__trigger:checked ~ .project__pledge__form {
+    display: block;
+}
+
+.project__pledge__form__trigger:checked ~ .project__pledge__form__toggle {
+    display: none;
+}
+
+.project__pledge__form {
+    grid-area: form;
+    display: none;
+    margin-top: var(--y);
+}
+
+.project__pledge__form > * {
+    width: 100%;
+    display: block;
+}
+
+#project-become-a-backer {
+    background-color: var(--bg-color);
+    border-top: 1px solid var(--border-color);
+    padding: var(--y) var(--x);
+    position: sticky;
+    bottom: 0;
+    height: var(--header-height);
+    display: flex;
+    justify-content: center;
+
+    width: 100%;
+    z-index: 6;
+}

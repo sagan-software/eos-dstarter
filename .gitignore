@@ -38,3 +38,6 @@ build
 node_modules
 target
 pkg
+*.log
+.cache
+dist

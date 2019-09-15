@@ -1,0 +1,133 @@
+extends skeleton.pug
+
+block main
+    header.project__media
+        div.project__video__play
+        img.project__poster(src='../../static/' + projectPoster)
+
+    .project__title
+        h1.project__title__name= projectName
+        p.project__title__summary= projectSummary
+
+    .project__creator
+        img.project__creator__avatar(src='../../static/' + creatorAvatar)
+        .project__creator__name= creatorName
+        .project__creator__info
+            = `${creatorCreated} created • ${creatorBacked} backed`
+
+    .project__stats
+        - var pct = projectPledged / projectGoal;
+        - var x = Math.max(Math.round(pct * 4), 4);
+        .project__progress
+            each _val, i in [...Array(x).keys()]
+                if i > 0
+                    i(style=`left:${(i / x * 100).toFixed(1)}%`)
+            span(style=`width:${Math.min(pct * 100, 100)}%`)
+
+        .project__stat.--pledged
+            .project__stat__value= `$${projectPledgedFmt}`
+            .project__stat__label= `pledged of $${projectGoalFmt}`
+
+        .project__stat.--backers
+            .project__stat__value 172
+            .project__stat__label backers
+
+        .project__stat.--time
+            .project__stat__value 18
+            .project__stat__label hours to go
+
+    .project__meta
+        a(href='#')= projectCategory
+        a(href='#')= projectLocation
+
+    .project__backers
+        h2 Top Backers
+
+        ol
+            li
+                a(href='#')
+                    img.avatar.-lg(src='../../static/' + creatorAvatar)
+                    span eosnewyork
+            li
+                a(href='#')
+                    img.avatar.-lg(src='../../static/' + creatorAvatar)
+                    span cypherglass
+            li
+                a(href='#')
+                    img.avatar.-lg(src='../../static/' + creatorAvatar)
+                    span b1
+        div
+            a(href='#')
+                img.avatar(src='../../static/' + creatorAvatar)
+            a(href='#')
+                img.avatar(src='../../static/' + creatorAvatar)
+            a(href='#')
+                img.avatar(src='../../static/' + creatorAvatar)
+            a(href='#')
+                img.avatar(src='../../static/' + creatorAvatar)
+            a(href='#')
+                img.avatar(src='../../static/' + creatorAvatar)
+            a(href='#')
+                img.avatar(src='../../static/' + creatorAvatar)
+            a(href='#')
+                img.avatar(src='../../static/' + creatorAvatar)
+
+    #project-become-a-backer
+        label.btn.full(for='become-a-backer-modal')
+            | Back this project
+
+    nav.project__nav
+        label.project__nav__link(for='overview-tab') Overview
+        label.project__nav__link(for='rewards-tab') Rewards
+        label.project__nav__link(for='faq-tab') FAQ
+        label.project__nav__link(for='posts-tab') Posts
+
+    .project__tabs
+        input.tab-trigger(type='radio' name='tab' id='overview-tab' checked)
+        .tab-content.p
+            include:markdown-it project-content.md
+
+        input.tab-trigger(type='radio' name='tab' id='rewards-tab' checked)
+        .project__pledges.tab-content
+
+            label.project__pledge.--no-reward
+                h3.project__pledge__title Make a pledge without a reward
+                form.project__pledge__form
+                    input.project__pledge__form__amount
+                    button.project__pledge__form__button(type='submit') Continue
+
+            each reward in projectRewards
+                .project__pledge
+                    h3.project__pledge__title= `Pledge $${reward.amount} or more`
+                    h4.project__pledge__name= reward.name
+                    p.project__pledge__desc= reward.desc
+                    .project__pledge__delivery
+                        h5.project__pledge__delivery__title Estimated Delivery
+                        p.project__pledge__delivery__value= reward.estimated_delivery
+                    .project__pledge__shipping
+                        h5.project__pledge__shipping__title Ships To
+                        p.project__pledge__shipping_value= reward.ships_to
+                    .project__pledge__backers
+                        = `${reward.backers} claimed`
+                        if reward.limit
+                            span.project__pledge__backers__limit
+                                = ` (${reward.limit - reward.backers} left of ${reward.limit})`
+                    input.project__pledge__form__trigger(name='pledge' type='radio' id=`pledge-${reward.id}`)
+                    label.project__pledge__form__toggle(for=`pledge-${reward.id}`)
+                    form.project__pledge__form
+                        input.project__pledge__form__amount
+                        button.project__pledge__form__button.btn(type='submit') Continue
+
+
+        input.tab-trigger(type='radio' name='tab' id='faq-tab' checked)
+        .tab-content.p
+            h2 FAQ
+
+        input.tab-trigger(type='radio' name='tab' id='posts-tab' checked)
+        .tab-content.p
+            h2 Posts
+
+append modals
+    input.modal-trigger(type='radio' name='modal' id='become-a-backer-modal')
+    .modal-content
+        h2 Become a backer

@@ -1,0 +1,25 @@
+.bar {
+    height: 4px;
+    width: 100%;
+    display: block;
+    background-color: var(--border-color);
+    position: relative;
+}
+
+.bar span {
+    background-color: var(--brand);
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    z-index: 1;
+}
+
+.bar i {
+    background-color: #fff;
+    position: absolute;
+    top: 0;
+    width: 1px;
+    height: 100%;
+    z-index: 2;
+}

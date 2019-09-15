@@ -1,3 +1,0 @@
-[submodule "contracts/eosio.contracts"]
-	path = contract/tests/eosio.contracts
-	url = https://github.com/EOSIO/eosio.contracts.git

@@ -1,0 +1,41 @@
+#start-page {
+    padding: var(--y) var(--x);
+}
+
+.step select:invalid + .btn,
+.step textarea:invalid + .btn,
+.step select:invalid + .btn {
+    pointer-events: none;
+    opacity: 0.2;
+    cursor: not-allowed;
+}
+
+.step {
+    display: none;
+}
+
+.step-input:checked + .step {
+    display: block;
+}
+
+.step-input {
+    display: none;
+}
+
+.step h1,
+.step p {
+    text-align: center;
+    margin: 0 0 var(--y);
+}
+
+.step select,
+.step textarea {
+    width: 100%;
+    margin-bottom: var(--y);
+}
+
+.step .btn {
+    margin-bottom: var(--y);
+    width: 100%;
+    transition: 300ms opacity;
+}

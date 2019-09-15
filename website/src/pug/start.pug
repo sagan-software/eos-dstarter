@@ -1,0 +1,57 @@
+extends skeleton.pug
+
+block main
+    form#start-page.stepper
+
+        input#step-1-input.step-input(type="radio" name="step" checked)
+        .step
+            h1 First, let's get you setup
+            p
+                | Pick a project category to connect with a specific community.
+                | You can always update this later.
+            select(required)
+                option(disabled selected) Select your category
+                option Art
+                option Comics
+                option Crafts
+                option Dance
+                option Design
+                option Fashion
+                option Film &amp; Video
+                option Food
+                option Games
+                option Journalism
+                option Music
+                option Photography
+                option Publishing
+                option Technology
+                option Theater
+
+            label.btn(for="step-2-input") Next: Project Idea
+            p Welcome back.
+
+        input#step-2-input.step-input(type="radio" name="step")
+        .step
+            h1 Describe what you'll be creating.
+            p And don't worry, you can edit this later, too.
+
+            textarea(
+                placeholder='A documentary about the history of shoes.'
+                required minlength=1 maxlength=144
+            )
+            label.btn(for="step-3-input") Next: Location
+            p: label(for="step-1-input") Category
+
+        input#step-3-input.step-input(type="radio" name="step")
+        .step
+            h1 Finally, let's select a blockchain.
+            p Tell us which blockchain you would like to raise funds on.
+            select(required)
+                option(disabled selected) Select a blockchain
+                option EOSIO Mainnet
+                option EOSIO Jungle Testnet
+                option EOSIO Kylin Testnet
+                option Telos Mainnet
+                option EOS Force Mainnet
+            button.btn(type="submit") Continue
+            p: label(for="step-2-input") Project idea
